@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KSA Panel - Official Store</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+body{background:#f4f7fb;color:#172033}
+.header{background:linear-gradient(90deg,#0757d9,#168cff,#16a34a,#f97316,#e3262e);padding:10px 5%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:999;box-shadow:0 4px 15px rgba(0,0,0,.15)}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;font-size:24px;font-weight:900}
+.logo img{width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid #fff}
+.logo span{color:#ffe600}.telegram-top{background:#fff;color:#0757d9;padding:10px 17px;border-radius:8px;text-decoration:none;font-weight:bold}
+.notice{max-width:1100px;margin:18px auto;padding:15px 20px;background:#fff7ed;border-left:5px solid #f97316;border-radius:10px;box-shadow:0 3px 12px rgba(0,0,0,.06)}
+.notice b{color:#e3262e}.hero{max-width:1100px;margin:18px auto;border-radius:18px;padding:48px 20px;text-align:center;color:#fff;background:linear-gradient(135deg,#0757d9,#168cff,#16a34a,#f97316,#e3262e);box-shadow:0 8px 25px rgba(0,0,0,.15)}
+.hero h1{font-size:42px;margin-bottom:10px}.hero h1 span{color:#ffe600}.hero p{font-size:17px}
+.container{max-width:1100px;margin:auto;padding:0 18px 45px}.categories{display:flex;gap:10px;overflow-x:auto;padding:8px 0 20px}
+.categories button{border:1px solid #dbe2ec;padding:11px 18px;border-radius:9px;background:#fff;color:#0757d9;font-weight:bold;cursor:pointer;white-space:nowrap}
+.categories button.active,.categories button:hover{background:#0757d9;color:#fff}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.product{background:#fff;border-radius:15px;overflow:hidden;border:1px solid #e1e6ef;box-shadow:0 5px 20px rgba(0,0,0,.07);transition:.25s}
+.product:hover{transform:translateY(-5px);box-shadow:0 10px 28px rgba(0,0,0,.13)}
+.product-img{width:100%;height:190px;overflow:hidden;background:#111}.product-img img{width:100%;height:100%;object-fit:cover;display:block}
+.product-body{padding:17px}.product h3{color:#0757d9;margin-bottom:5px;font-size:20px}.product p{color:#687386;font-size:14px;margin:10px 0;min-height:36px}
+.verified{display:inline-block;background:#0757d9;color:#fff;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:bold;margin-bottom:8px}
+.price-list{margin:12px 0}.plan{display:flex;justify-content:space-between;align-items:center;background:#f8fafc;border:1px solid #e3e8ef;border-radius:8px;padding:9px 11px;margin:6px 0;font-size:14px}.plan b{color:#e3262e;font-size:16px}
+.buy{width:100%;padding:12px;border:0;border-radius:8px;background:#0757d9;color:#fff;font-size:15px;font-weight:bold;cursor:pointer}.buy:hover{background:#e3262e}
+.alt-buy{background:#16a34a;margin-top:7px}.alt-buy:hover{background:#0757d9}
+.payment,.orders{margin-top:35px;background:#fff;border-radius:14px;padding:25px;box-shadow:0 5px 20px rgba(0,0,0,.07)}
+.payment{border-top:5px solid #f97316}.payment h2,.orders h2{text-align:center;color:#0757d9;margin-bottom:18px}
+.bkash{text-align:center;background:#eff6ff;border:2px solid #0757d9;padding:18px;border-radius:10px}.bkash-title{color:#e3262e;font-size:18px;font-weight:bold}.bkash-number{color:#0757d9;font-size:27px;font-weight:900;margin:8px 0}
+.payment input,.modal input{width:100%;padding:14px;margin-top:15px;border:1px solid #d5dce7;border-radius:8px;outline:none;font-size:15px}
+.submit,.modal button{width:100%;padding:14px;margin-top:10px;border:0;border-radius:8px;background:#e3262e;color:#fff;font-weight:bold;cursor:pointer}
+.telegram-support{display:block;text-align:center;margin-top:10px;padding:13px;border-radius:8px;background:#16a34a;color:#fff;text-decoration:none;font-weight:bold}
+.success{display:none;margin-top:12px;padding:12px;background:#ecfdf5;color:#15803d;border:1px solid #22c55e;border-radius:8px;text-align:center}
+.order{display:flex;justify-content:space-between;padding:13px 5px;border-bottom:1px solid #edf0f4;font-size:14px}.status{color:#16a34a;font-weight:bold}
+.footer{background:linear-gradient(90deg,#0757d9,#16a34a,#f97316,#e3262e);color:#fff;text-align:center;padding:28px 15px}.footer strong{color:#ffe600}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);align-items:center;justify-content:center;padding:20px;z-index:1000}.modal-box{width:100%;max-width:430px;background:#fff;border-radius:14px;padding:24px;position:relative}.close{position:absolute;right:17px;top:9px;font-size:28px;color:#777;cursor:pointer}.selected{background:#eff6ff;border-left:4px solid #0757d9;padding:12px;margin:18px 0}
+@media(max-width:600px){.header{padding:9px 4%}.logo{font-size:19px}.logo img{width:42px;height:42px}.telegram-top{padding:8px 11px;font-size:13px}.notice{margin:12px}.hero{margin:12px;padding:40px 18px}.hero h1{font-size:29px}.container{padding:0 12px 30px}.products{grid-template-columns:repeat(2,1fr);gap:12px}.product-img{height:145px}.product-body{padding:12px}.product h3{font-size:17px}.buy{font-size:13px;padding:11px 5px}}
+</style>
+</head>
+<body>
+<header class="header"><div class="logo"><img src="FB_IMG_1790397329992.jpg" alt="KSA Logo"><div>KSA <span>PANEL</span></div></div><a href="https://t.me/ksapanel473" target="_blank" class="telegram-top">Telegram</a></header>
+<div class="notice"><b>NOTICE:</b> Payment করার আগে সঠিক product এবং price দেখে নিন। Payment করার পর Transaction ID অবশ্যই submit করুন।</div>
+<section class="hero"><h1>Welcome to <span>KSA Panel</span></h1><p>Premium Gaming Panel & Digital Services</p></section>
+<main class="container">
+<div class="categories"><button class="active" onclick="filterProducts('ALL',this)">ALL</button><button onclick="filterProducts('NON ROOT',this)">NON ROOT</button><button onclick="filterProducts('ROOT',this)">ROOT</button><button onclick="filterProducts('IPHONE',this)">IPHONE</button><button onclick="filterProducts('PC PANEL',this)">PC PANEL</button></div>
+<section class="products">
+<div class="product" data-category="NON ROOT">
+<div class="product-img"><img src="FB_IMG_1790397329992.jpg" alt="KSA Non Root Panel"></div>
+<div class="product-body"><span class="verified">NON ROOT • ✓ VERIFIED</span><h3>Non Root Panel</h3><p>Non Root gaming panel service</p>
+<div class="price-list">
+<div class="plan"><span>৩০ দিন</span><b>৳300</b></div>
+<div class="plan"><span>১ OBB</span><b>৳700</b></div>
+<div class="plan"><span>পারমানেন্ট</span><b>৳1400</b></div>
+</div>
+<button class="buy" onclick="openOrder('Non Root Panel - ৩০ দিন','300')">৩০ দিন কিনুন</button>
+<button class="buy alt-buy" onclick="openOrder('Non Root Panel - ১ OBB','700')">১ OBB কিনুন</button>
+<button class="buy" onclick="openOrder('Non Root Panel - পারমানেন্ট','1400')">পারমানেন্ট কিনুন</button>
+</div></div>
+<div class="product" data-category="ROOT">
+<div class="product-img"><img src="FB_IMG_1790397329992.jpg" alt="KSA Root Panel"></div>
+<div class="product-body"><span class="verified">ROOT • ✓ VERIFIED</span><h3>Root Panel</h3><p>Root device gaming panel service</p>
+<div class="price-list">
+<div class="plan"><span>৩০ দিন</span><b>৳450</b></div>
+<div class="plan"><span>১ OBB</span><b>৳970</b></div>
+<div class="plan"><span>পারমানেন্ট</span><b>৳3300</b></div>
+</div>
+<button class="buy" onclick="openOrder('Root Panel - ৩০ দিন','450')">৩০ দিন কিনুন</button>
+<button class="buy alt-buy" onclick="openOrder('Root Panel - ১ OBB','970')">১ OBB কিনুন</button>
+<button class="buy" onclick="openOrder('Root Panel - পারমানেন্ট','3300')">পারমানেন্ট কিনুন</button>
+</div></div>
+<div class="product" data-category="IPHONE">
+<div class="product-img"><img src="FB_IMG_1790397329992.jpg" alt="KSA iPhone Panel"></div>
+<div class="product-body"><span class="verified">IPHONE • ✓ VERIFIED</span><h3>iPhone Panel</h3><p>iPhone gaming panel service</p>
+<div class="price-list">
+<div class="plan"><span>৩০ দিন</span><b>৳400</b></div>
+<div class="plan"><span>১ OBB</span><b>৳700</b></div>
+<div class="plan"><span>পারমানেন্ট</span><b>৳4570</b></div>
+</div>
+<button class="buy" onclick="openOrder('iPhone Panel - ৩০ দিন','400')">৩০ দিন কিনুন</button>
+<button class="buy alt-buy" onclick="openOrder('iPhone Panel - ১ OBB','700')">১ OBB কিনুন</button>
+<button class="buy" onclick="openOrder('iPhone Panel - পারমানেন্ট','4570')">পারমানেন্ট কিনুন</button>
+</div></div>
+<div class="product" data-category="PC PANEL">
+<div class="product-img"><img src="FB_IMG_1790397329992.jpg" alt="KSA PC Panel"></div>
+<div class="product-body"><span class="verified">PC PANEL • ✓ VERIFIED</span><h3>PC Panel</h3><p>PC gaming panel service</p>
+<div class="price-list">
+<div class="plan"><span>৩০ দিন</span><b>৳600</b></div>
+<div class="plan"><span>১ OBB</span><b>৳1180</b></div>
+<div class="plan"><span>পারমানেন্ট</span><b>৳2300</b></div>
+</div>
+<button class="buy" onclick="openOrder('PC Panel - ৩০ দিন','600')">৩০ দিন কিনুন</button>
+<button class="buy alt-buy" onclick="openOrder('PC Panel - ১ OBB','1180')">১ OBB কিনুন</button>
+<button class="buy" onclick="openOrder('PC Panel - পারমানেন্ট','2300')">পারমানেন্ট কিনুন</button>
+</div></div>
+</section>
+<section class="payment"><h2>💳 Payment</h2><div class="bkash"><div class="bkash-title">bKash Send Money</div><div class="bkash-number">01832137297</div><p>Send Money করার পর Transaction ID নিচে দিন।</p></div><input id="trx" type="text" placeholder="Enter Transaction ID / TRX ID"><button class="submit" onclick="submitPayment()">SUBMIT TRANSACTION</button><a href="https://t.me/ksapanel473" target="_blank" class="telegram-support">📲 Telegram Support @ksapanel473</a><div id="success" class="success">Transaction ID received. Verification-এর জন্য Telegram-এ যোগাযোগ করুন।</div></section>
+<section class="orders"><h2>Latest 5 Orders</h2><div class="order"><span>Customer ****23</span><span class="status">Completed</span></div><div class="order"><span>Customer ****71</span><span class="status">Completed</span></div><div class="order"><span>Customer ****48</span><span class="status">Completed</span></div><div class="order"><span>Customer ****92</span><span class="status">Completed</span></div><div class="order"><span>Customer ****16</span><span class="status">Completed</span></div></section>
+</main>
+<footer class="footer"><p>© 2026 KSA Panel. All Rights Reserved.</p><p><strong>Red • Orange • Green • Blue</strong></p></footer>
+<div id="orderModal" class="modal"><div class="modal-box"><span class="close" onclick="closeOrder()">×</span><h2 style="color:#0757d9;">Order সম্পন্ন করুন</h2><div id="selectedProduct" class="selected"></div><p>bKash Send Money:</p><h3 style="color:#e3262e;margin-top:5px;">01832137297</h3><input id="modalTrx" type="text" placeholder="Transaction ID দিন"><button onclick="confirmOrder()">পেমেন্ট নিশ্চিত করুন</button><div id="modalSuccess" class="success">TRX ID সফলভাবে গ্রহণ করা হয়েছে।</div></div></div>
+<script>
+function filterProducts(category,button){document.querySelectorAll('.categories button').forEach(b=>b.classList.remove('active'));button.classList.add('active');document.querySelectorAll('.product').forEach(product=>{product.style.display=(category==='ALL'||product.dataset.category===category)?'block':'none';});}
+function openOrder(product,price){document.getElementById("selectedProduct").innerHTML="<b>"+product+"</b><br>মূল্য: ৳"+price;document.getElementById("orderModal").style.display="flex";}
+function closeOrder(){document.getElementById("orderModal").style.display="none";}
+function submitPayment(){let trx=document.getElementById("trx").value.trim();if(!trx){alert("Transaction ID দিন।");return;}document.getElementById("success").style.display="block";}
+function confirmOrder(){let trx=document.getElementById("modalTrx").value.trim();if(!trx){alert("Transaction ID দিন।");return;}document.getElementById("modalSuccess").style.display="block";}
+window.onclick=function(event){const modal=document.getElementById("orderModal");if(event.target===modal)closeOrder();}
+</script>
+</body></html>
