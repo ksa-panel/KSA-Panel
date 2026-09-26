@@ -13,4 +13,4 @@ KSA Panel-এর অফিসিয়াল ওয়েবসাইট।
 - `style.css` — ডিজাইন ও স্টাইল
 - `script.js` — বাটন ও ইন্টার‌্যাকশন
 
-© 2026 KSA Panel. All Rights Reserved.
+ KSA থেকে শপিং করার জন্য ধন্যবাদ।
