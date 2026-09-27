@@ -15,25 +15,26 @@
 }
 
 :root{
-    --black:#05070a;
-    --black2:#0b0f15;
-    --navy:#071b3a;
-    --navy2:#0b2d5c;
+    --red:#d60000;
+    --dark-red:#980000;
+    --black:#050505;
+    --black2:#111111;
     --white:#ffffff;
-    --light:#f4f6f9;
-    --gray:#667085;
-    --border:#d9dee7;
+    --light:#f5f5f5;
+    --gray:#666;
+    --border:#dddddd;
 }
 
 body{
     background:var(--light);
     color:var(--black);
+    overflow-x:hidden;
 }
 
 /* ================= HEADER ================= */
 
 .header{
-    background:linear-gradient(135deg,var(--black),var(--navy));
+    background:linear-gradient(135deg,#000000,#d60000);
     color:white;
     padding:14px 20px;
     display:flex;
@@ -42,7 +43,7 @@ body{
     position:sticky;
     top:0;
     z-index:1000;
-    box-shadow:0 4px 15px rgba(0,0,0,.25);
+    box-shadow:0 4px 15px rgba(0,0,0,.3);
 }
 
 .logo-area{
@@ -61,13 +62,12 @@ body{
 
 .logo-text{
     font-size:22px;
-    font-weight:800;
-    letter-spacing:.5px;
+    font-weight:900;
 }
 
 .telegram-btn{
     background:white;
-    color:var(--navy);
+    color:#000;
     padding:9px 15px;
     border-radius:22px;
     text-decoration:none;
@@ -78,24 +78,25 @@ body{
 /* ================= NOTICE ================= */
 
 .notice{
-    background:var(--navy);
+    background:#000;
     color:white;
     padding:11px 15px;
     text-align:center;
     font-size:14px;
     font-weight:bold;
+    border-bottom:2px solid var(--red);
 }
 
 /* ================= HERO ================= */
 
 .hero{
+    background:white;
     text-align:center;
     padding:38px 15px 25px;
-    background:white;
 }
 
 .hero h1{
-    color:var(--navy);
+    color:var(--red);
     font-size:31px;
     margin-bottom:9px;
     font-weight:900;
@@ -123,9 +124,9 @@ body{
 }
 
 .category{
-    border:1px solid var(--navy);
+    border:1px solid var(--red);
     background:white;
-    color:var(--navy);
+    color:#000;
     padding:10px 17px;
     border-radius:25px;
     white-space:nowrap;
@@ -134,13 +135,9 @@ body{
     transition:.2s;
 }
 
-.category:hover{
-    background:var(--navy);
-    color:white;
-}
-
+.category:hover,
 .category.active{
-    background:var(--navy);
+    background:var(--red);
     color:white;
 }
 
@@ -148,7 +145,7 @@ body{
 
 .products{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
     gap:18px;
     padding:25px 15px 35px;
     max-width:1200px;
@@ -160,32 +157,33 @@ body{
     border:1px solid var(--border);
     border-radius:16px;
     padding:20px;
-    box-shadow:0 4px 13px rgba(0,0,0,.08);
+    box-shadow:0 5px 18px rgba(0,0,0,.10);
     transition:.25s;
 }
 
 .product-card:hover{
     transform:translateY(-4px);
-    box-shadow:0 7px 20px rgba(7,27,58,.16);
+    border-color:var(--red);
+    box-shadow:0 8px 25px rgba(214,0,0,.18);
 }
 
 .product-title{
-    color:var(--navy);
+    color:var(--red);
     font-size:21px;
-    font-weight:800;
-    margin-bottom:11px;
+    font-weight:900;
+    margin-bottom:10px;
 }
 
 .product-info{
     color:var(--gray);
     font-size:14px;
     line-height:1.8;
-    margin-bottom:12px;
+    margin-bottom:15px;
 }
 
 .price{
-    font-size:24px;
-    color:var(--black);
+    font-size:23px;
+    color:#000;
     font-weight:900;
     margin-bottom:15px;
 }
@@ -193,22 +191,55 @@ body{
 .buy-btn{
     width:100%;
     border:0;
-    background:var(--navy);
+    background:var(--red);
     color:white;
-    padding:12px;
-    border-radius:10px;
-    font-size:15px;
+    padding:11px;
+    border-radius:9px;
+    font-size:14px;
     font-weight:bold;
     cursor:pointer;
     transition:.2s;
 }
 
 .buy-btn:hover{
-    background:var(--black);
+    background:#000;
 }
 
-.simple-card{
-    text-align:center;
+/* ================= PACKAGE ================= */
+
+.package-list{
+    display:grid;
+    gap:10px;
+    margin-top:15px;
+}
+
+.package{
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:12px;
+    background:#fafafa;
+}
+
+.package-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:9px;
+}
+
+.package-name{
+    color:#000;
+    font-weight:bold;
+}
+
+.package-price{
+    color:var(--red);
+    font-weight:900;
+}
+
+.package .buy-btn{
+    padding:9px;
 }
 
 /* ================= PAYMENT ================= */
@@ -220,27 +251,19 @@ body{
     padding:27px 20px;
     border-radius:18px;
     border:1px solid var(--border);
-    box-shadow:0 5px 18px rgba(0,0,0,.09);
+    box-shadow:0 5px 18px rgba(0,0,0,.10);
     text-align:center;
 }
 
 .payment-section h2{
-    color:var(--navy);
+    color:var(--red);
     font-size:25px;
     margin-bottom:18px;
 }
 
-/* নেভি-ব্লু পেমেন্ট লোগো */
-
-.bkash-logo{
-    display:flex;
-    justify-content:center;
-    margin-bottom:16px;
-}
-
-.bkash-logo svg{
-    width:110px;
-    height:auto;
+.payment-logo{
+    width:105px;
+    margin:0 auto 15px;
 }
 
 .payment-help{
@@ -250,13 +273,14 @@ body{
 }
 
 .payment-number{
-    background:var(--navy);
+    background:#000;
     color:white;
     padding:13px;
     border-radius:10px;
     font-size:21px;
     font-weight:bold;
     margin:12px 0 15px;
+    border:2px solid var(--red);
     letter-spacing:1px;
 }
 
@@ -269,18 +293,17 @@ body{
     font-size:15px;
     margin-bottom:12px;
     background:white;
-    color:var(--black);
+    color:#000;
 }
 
 .trx-input:focus{
-    border:1px solid var(--navy);
-    box-shadow:0 0 0 2px rgba(7,27,58,.08);
+    border-color:var(--red);
 }
 
 .submit-btn{
     width:100%;
     border:0;
-    background:var(--black);
+    background:var(--red);
     color:white;
     padding:13px;
     border-radius:10px;
@@ -290,13 +313,13 @@ body{
 }
 
 .submit-btn:hover{
-    background:var(--navy);
+    background:#000;
 }
 
 .telegram-support{
     display:inline-block;
     margin-top:15px;
-    color:var(--navy);
+    color:var(--red);
     text-decoration:none;
     font-weight:bold;
 }
@@ -311,7 +334,7 @@ body{
 
 .orders h2{
     text-align:center;
-    color:var(--navy);
+    color:var(--red);
     margin-bottom:16px;
 }
 
@@ -326,9 +349,8 @@ body{
     border-radius:10px;
     display:flex;
     justify-content:space-between;
-    gap:10px;
-    border:1px solid var(--border);
-    box-shadow:0 2px 7px rgba(0,0,0,.05);
+    border-left:4px solid var(--red);
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
 }
 
 .order-name{
@@ -336,7 +358,7 @@ body{
 }
 
 .order-status{
-    color:var(--navy);
+    color:var(--red);
     font-weight:bold;
 }
 
@@ -346,8 +368,8 @@ body{
     display:none;
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.72);
-    z-index:2000;
+    background:rgba(0,0,0,.78);
+    z-index:5000;
     align-items:center;
     justify-content:center;
     padding:15px;
@@ -360,26 +382,27 @@ body{
     border-radius:18px;
     padding:23px;
     position:relative;
-    box-shadow:0 10px 35px rgba(0,0,0,.3);
+    border-top:5px solid var(--red);
+    box-shadow:0 10px 35px rgba(0,0,0,.35);
 }
 
 .close{
     position:absolute;
     right:15px;
-    top:9px;
+    top:8px;
     font-size:29px;
     cursor:pointer;
-    color:var(--black);
+    color:#000;
 }
 
 .modal-box h2{
-    color:var(--navy);
-    margin-bottom:9px;
+    color:var(--red);
+    margin-bottom:10px;
 }
 
 .selected-product{
-    background:var(--light);
-    border-left:4px solid var(--navy);
+    background:#f4f4f4;
+    border-left:4px solid var(--red);
     padding:13px;
     border-radius:8px;
     margin:15px 0;
@@ -389,16 +412,229 @@ body{
 /* ================= FOOTER ================= */
 
 footer{
-    background:var(--black);
-    color:#d7dce5;
+    background:#000;
+    color:#ddd;
     text-align:center;
     padding:25px 15px;
     font-size:14px;
+    border-top:3px solid var(--red);
 }
 
 footer strong{
-    color:white;
-    font-size:18px;
+    color:var(--red);
+    font-size:19px;
+}
+
+/* =================================================
+   সমুদ্রের নিচের অ্যানিমেশন
+================================================= */
+
+.underwater{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:9999;
+}
+
+/* মাছ */
+
+.fish{
+    position:absolute;
+    font-size:38px;
+    opacity:.65;
+    filter:drop-shadow(0 3px 5px rgba(0,0,0,.35));
+}
+
+/* মাছ ১ */
+
+.fish1{
+    top:16%;
+    left:-90px;
+    animation:
+        swimRight 18s linear infinite,
+        fishFloat 2s ease-in-out infinite;
+}
+
+/* মাছ ২ */
+
+.fish2{
+    top:35%;
+    right:-90px;
+    animation:
+        swimLeft 22s linear infinite,
+        fishFloat 2.5s ease-in-out infinite;
+    animation-delay:3s;
+}
+
+/* মাছ ৩ */
+
+.fish3{
+    top:56%;
+    left:-90px;
+    animation:
+        swimRight 25s linear infinite,
+        fishFloat 3s ease-in-out infinite;
+    animation-delay:6s;
+}
+
+/* মাছ ৪ */
+
+.fish4{
+    top:74%;
+    right:-90px;
+    animation:
+        swimLeft 20s linear infinite,
+        fishFloat 2s ease-in-out infinite;
+    animation-delay:4s;
+}
+
+/* মাছ ৫ */
+
+.fish5{
+    top:27%;
+    left:-90px;
+    font-size:32px;
+    animation:
+        swimRight 30s linear infinite,
+        fishFloat 2.7s ease-in-out infinite;
+    animation-delay:10s;
+}
+
+@keyframes swimRight{
+    0%{
+        transform:translateX(-100px);
+    }
+
+    100%{
+        transform:translateX(calc(100vw + 160px));
+    }
+}
+
+@keyframes swimLeft{
+    0%{
+        transform:translateX(100px);
+    }
+
+    100%{
+        transform:translateX(calc(-100vw - 160px));
+    }
+}
+
+@keyframes fishFloat{
+    0%,100%{
+        margin-top:0;
+    }
+
+    50%{
+        margin-top:15px;
+    }
+}
+
+/* ================= BUBBLES ================= */
+
+.bubble{
+    position:absolute;
+    bottom:-40px;
+    width:12px;
+    height:12px;
+    border:2px solid rgba(0,0,0,.25);
+    background:rgba(255,255,255,.65);
+    border-radius:50%;
+    animation:bubbleUp linear infinite;
+}
+
+.b1{
+    left:8%;
+    animation-duration:8s;
+}
+
+.b2{
+    left:23%;
+    width:8px;
+    height:8px;
+    animation-duration:11s;
+    animation-delay:2s;
+}
+
+.b3{
+    left:44%;
+    animation-duration:9s;
+    animation-delay:4s;
+}
+
+.b4{
+    left:66%;
+    width:9px;
+    height:9px;
+    animation-duration:12s;
+    animation-delay:1s;
+}
+
+.b5{
+    left:82%;
+    animation-duration:10s;
+    animation-delay:5s;
+}
+
+.b6{
+    left:93%;
+    width:7px;
+    height:7px;
+    animation-duration:7s;
+    animation-delay:3s;
+}
+
+@keyframes bubbleUp{
+
+    0%{
+        transform:translateY(0) scale(.7);
+        opacity:0;
+    }
+
+    20%{
+        opacity:.7;
+    }
+
+    100%{
+        transform:translateY(-110vh) scale(1.2);
+        opacity:0;
+    }
+}
+
+/* ================= SEAWEED ================= */
+
+.seaweed{
+    position:absolute;
+    bottom:-10px;
+    font-size:65px;
+    opacity:.18;
+    animation:seaweedMove 3s ease-in-out infinite;
+}
+
+.seaweed1{
+    left:12%;
+}
+
+.seaweed2{
+    left:48%;
+    animation-delay:1s;
+}
+
+.seaweed3{
+    right:12%;
+    animation-delay:2s;
+}
+
+@keyframes seaweedMove{
+
+    0%,100%{
+        transform:rotate(-5deg);
+    }
+
+    50%{
+        transform:rotate(8deg);
+    }
 }
 
 /* ================= MOBILE ================= */
@@ -441,11 +677,43 @@ footer strong{
         margin-right:13px;
     }
 
+    .fish{
+        font-size:27px;
+    }
+
+    .seaweed{
+        font-size:45px;
+    }
 }
 </style>
 </head>
 
+
 <body>
+
+<!-- ================= UNDERWATER ANIMATION ================= -->
+
+<div class="underwater">
+
+    <div class="bubble b1"></div>
+    <div class="bubble b2"></div>
+    <div class="bubble b3"></div>
+    <div class="bubble b4"></div>
+    <div class="bubble b5"></div>
+    <div class="bubble b6"></div>
+
+    <div class="fish fish1">🐟</div>
+    <div class="fish fish2">🐠</div>
+    <div class="fish fish3">🐟</div>
+    <div class="fish fish4">🐠</div>
+    <div class="fish fish5">🐡</div>
+
+    <div class="seaweed seaweed1">🌿</div>
+    <div class="seaweed seaweed2">🌿</div>
+    <div class="seaweed seaweed3">🌿</div>
+
+</div>
+
 
 <!-- ================= HEADER ================= -->
 
@@ -493,7 +761,7 @@ footer strong{
 </section>
 
 
-<!-- ================= CATEGORIES ================= -->
+<!-- ================= CATEGORY ================= -->
 
 <div class="categories">
 
@@ -556,7 +824,7 @@ footer strong{
     <!-- সেনসি -->
 
     <div
-        class="product-card simple-card"
+        class="product-card"
         data-category="sensi">
 
         <div class="product-title">
@@ -583,7 +851,7 @@ footer strong{
     <!-- ড্রাগ হেডশট -->
 
     <div
-        class="product-card simple-card"
+        class="product-card"
         data-category="drag">
 
         <div class="product-title">
@@ -610,7 +878,7 @@ footer strong{
     <!-- লোকেশন -->
 
     <div
-        class="product-card simple-card"
+        class="product-card"
         data-category="location">
 
         <div class="product-title">
@@ -634,7 +902,7 @@ footer strong{
     </div>
 
 
-    <!-- নন রুট -->
+    <!-- ================= NON ROOT ================= -->
 
     <div
         class="product-card"
@@ -645,25 +913,85 @@ footer strong{
         </div>
 
         <div class="product-info">
-            ৩০ দিন — ৳৩০০<br>
-            ১ ওবিবি — ৳৭০০<br>
-            স্থায়ী — ৳১৪০০
+            আপনার পছন্দের প্যাকেজ নির্বাচন করুন।
         </div>
 
-        <div class="price">
-            ৳৩০০ থেকে
-        </div>
+        <div class="package-list">
 
-        <button
-            class="buy-btn"
-            onclick="openOrder('নন রুট','৩০ দিন — ৩০০ টাকা')">
-            কিনুন
-        </button>
+            <div class="package">
+
+                <div class="package-top">
+
+                    <span class="package-name">
+                        ৩০ দিন
+                    </span>
+
+                    <span class="package-price">
+                        ৳৩০০
+                    </span>
+
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="openOrder('নন রুট — ৩০ দিন','৩০০ টাকা')">
+                    কিনুন
+                </button>
+
+            </div>
+
+
+            <div class="package">
+
+                <div class="package-top">
+
+                    <span class="package-name">
+                        ১ ওবিবি
+                    </span>
+
+                    <span class="package-price">
+                        ৳৭০০
+                    </span>
+
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="openOrder('নন রুট — ১ ওবিবি','৭০০ টাকা')">
+                    কিনুন
+                </button>
+
+            </div>
+
+
+            <div class="package">
+
+                <div class="package-top">
+
+                    <span class="package-name">
+                        পারমানেন্ট
+                    </span>
+
+                    <span class="package-price">
+                        ৳১৪০০
+                    </span>
+
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="openOrder('নন রুট — পারমানেন্ট','১৪০০ টাকা')">
+                    কিনুন
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
 
-    <!-- রুট -->
+    <!-- ================= ROOT ================= -->
 
     <div
         class="product-card"
@@ -674,25 +1002,85 @@ footer strong{
         </div>
 
         <div class="product-info">
-            ৩০ দিন — ৳৪৫০<br>
-            ১ ওবিবি — ৳৯৭০<br>
-            স্থায়ী — ৳৩৩০০
+            আপনার পছন্দের প্যাকেজ নির্বাচন করুন।
         </div>
 
-        <div class="price">
-            ৳৪৫০ থেকে
-        </div>
+        <div class="package-list">
 
-        <button
-            class="buy-btn"
-            onclick="openOrder('রুট','৩০ দিন — ৪৫০ টাকা')">
-            কিনুন
-        </button>
+            <div class="package">
+
+                <div class="package-top">
+
+                    <span class="package-name">
+                        ৩০ দিন
+                    </span>
+
+                    <span class="package-price">
+                        ৳৪৫০
+                    </span>
+
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="openOrder('রুট — ৩০ দিন','৪৫০ টাকা')">
+                    কিনুন
+                </button>
+
+            </div>
+
+
+            <div class="package">
+
+                <div class="package-top">
+
+                    <span class="package-name">
+                        ১ ওবিবি
+                    </span>
+
+                    <span class="package-price">
+                        ৳৯৭০
+                    </span>
+
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="openOrder('রুট — ১ ওবিবি','৯৭০ টাকা')">
+                    কিনুন
+                </button>
+
+            </div>
+
+
+            <div class="package">
+
+                <div class="package-top">
+
+                    <span class="package-name">
+                        পারমানেন্ট
+                    </span>
+
+                    <span class="package-price">
+                        ৳৩৩০০
+                    </span>
+
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="openOrder('রুট — পারমানেন্ট','৩৩০০ টাকা')">
+                    কিনুন
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
 
-    <!-- আইফোন -->
+    <!-- ================= IPHONE ================= -->
 
     <div
         class="product-card"
@@ -703,25 +1091,85 @@ footer strong{
         </div>
 
         <div class="product-info">
-            ৩০ দিন — ৳৪০০<br>
-            ১ ওবিবি — ৳৭০০<br>
-            স্থায়ী — ৳৪৫৭০
+            আপনার পছন্দের প্যাকেজ নির্বাচন করুন।
         </div>
 
-        <div class="price">
-            ৳৪০০ থেকে
-        </div>
+        <div class="package-list">
 
-        <button
-            class="buy-btn"
-            onclick="openOrder('আইফোন','৩০ দিন — ৪০০ টাকা')">
-            কিনুন
-        </button>
+            <div class="package">
+
+                <div class="package-top">
+
+                    <span class="package-name">
+                        ৩০ দিন
+                    </span>
+
+                    <span class="package-price">
+                        ৳৪০০
+                    </span>
+
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="openOrder('আইফোন — ৩০ দিন','৪০০ টাকা')">
+                    কিনুন
+                </button>
+
+            </div>
+
+
+            <div class="package">
+
+                <div class="package-top">
+
+                    <span class="package-name">
+                        ১ ওবিবি
+                    </span>
+
+                    <span class="package-price">
+                        ৳৭০০
+                    </span>
+
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="openOrder('আইফোন — ১ ওবিবি','৭০০ টাকা')">
+                    কিনুন
+                </button>
+
+            </div>
+
+
+            <div class="package">
+
+                <div class="package-top">
+
+                    <span class="package-name">
+                        পারমানেন্ট
+                    </span>
+
+                    <span class="package-price">
+                        ৳৪৫৭০
+                    </span>
+
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="openOrder('আইফোন — পারমানেন্ট','৪৫৭০ টাকা')">
+                    কিনুন
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
 
-    <!-- পিসি প্যানেল -->
+    <!-- ================= PC PANEL ================= -->
 
     <div
         class="product-card"
@@ -732,20 +1180,80 @@ footer strong{
         </div>
 
         <div class="product-info">
-            ৩০ দিন — ৳৬০০<br>
-            ১ ওবিবি — ৳১১৮০<br>
-            স্থায়ী — ৳২৩০০
+            আপনার পছন্দের প্যাকেজ নির্বাচন করুন।
         </div>
 
-        <div class="price">
-            ৳৬০০ থেকে
-        </div>
+        <div class="package-list">
 
-        <button
-            class="buy-btn"
-            onclick="openOrder('পিসি প্যানেল','৩০ দিন — ৬০০ টাকা')">
-            কিনুন
-        </button>
+            <div class="package">
+
+                <div class="package-top">
+
+                    <span class="package-name">
+                        ৩০ দিন
+                    </span>
+
+                    <span class="package-price">
+                        ৳৬০০
+                    </span>
+
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="openOrder('পিসি প্যানেল — ৩০ দিন','৬০০ টাকা')">
+                    কিনুন
+                </button>
+
+            </div>
+
+
+            <div class="package">
+
+                <div class="package-top">
+
+                    <span class="package-name">
+                        ১ ওবিবি
+                    </span>
+
+                    <span class="package-price">
+                        ৳১১৮০
+                    </span>
+
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="openOrder('পিসি প্যানেল — ১ ওবিবি','১১৮০ টাকা')">
+                    কিনুন
+                </button>
+
+            </div>
+
+
+            <div class="package">
+
+                <div class="package-top">
+
+                    <span class="package-name">
+                        পারমানেন্ট
+                    </span>
+
+                    <span class="package-price">
+                        ৳২৩০০
+                    </span>
+
+                </div>
+
+                <button
+                    class="buy-btn"
+                    onclick="openOrder('পিসি প্যানেল — পারমানেন্ট','২৩০০ টাকা')">
+                    কিনুন
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -760,13 +1268,12 @@ footer strong{
         পেমেন্ট
     </h2>
 
+    <!-- পেমেন্ট লোগো -->
 
-    <!-- ইনলাইন পেমেন্ট লোগো -->
-
-    <div class="bkash-logo">
+    <div class="payment-logo">
 
         <svg
-            width="110"
+            width="105"
             viewBox="0 0 180 100"
             xmlns="http://www.w3.org/2000/svg">
 
@@ -774,16 +1281,16 @@ footer strong{
                 width="180"
                 height="100"
                 rx="15"
-                fill="#071b3a"/>
+                fill="#000000"/>
 
             <text
                 x="90"
                 y="63"
                 text-anchor="middle"
-                font-size="30"
+                font-size="28"
                 font-weight="bold"
-                fill="white">
-                পেমেন্ট
+                fill="#ffffff">
+                বিকাশ
             </text>
 
         </svg>
@@ -797,7 +1304,7 @@ footer strong{
 
 
     <div class="payment-number">
-        ০১৮৩২১৩৭২৯৭
+        01832137297
     </div>
 
 
@@ -838,7 +1345,6 @@ footer strong{
         সর্বশেষ ৫টি অর্ডার
     </h2>
 
-
     <div class="order-list">
 
         <div class="order-item">
@@ -851,7 +1357,6 @@ footer strong{
             </span>
         </div>
 
-
         <div class="order-item">
             <span class="order-name">
                 গ্রাহক ****৭১
@@ -861,7 +1366,6 @@ footer strong{
                 সম্পন্ন
             </span>
         </div>
-
 
         <div class="order-item">
             <span class="order-name">
@@ -873,7 +1377,6 @@ footer strong{
             </span>
         </div>
 
-
         <div class="order-item">
             <span class="order-name">
                 গ্রাহক ****৯৮
@@ -883,7 +1386,6 @@ footer strong{
                 সম্পন্ন
             </span>
         </div>
-
 
         <div class="order-item">
             <span class="order-name">
@@ -927,8 +1429,7 @@ footer strong{
         </div>
 
 
-        <p
-            style="color:#667085;margin-bottom:15px;">
+        <p style="color:#666;margin-bottom:15px;">
             পেমেন্ট সম্পন্ন করার পর লেনদেন নম্বর জমা দিন।
         </p>
 
@@ -961,11 +1462,9 @@ footer strong{
         </strong>
     </div>
 
-
     <div style="margin-top:8px;">
         সকল সেবা ব্যবহারের জন্য ধন্যবাদ।
     </div>
-
 
     <div style="margin-top:8px;">
         টেলিগ্রাম: @ksapanel473
@@ -976,7 +1475,7 @@ footer strong{
 
 <script>
 
-/* ================= CATEGORY FILTER ================= */
+/* ================= FILTER ================= */
 
 function filterProducts(category,button){
 
@@ -987,7 +1486,7 @@ function filterProducts(category,button){
         document.querySelectorAll('.category');
 
 
-    buttons.forEach(btn=>{
+    buttons.forEach(function(btn){
         btn.classList.remove('active');
     });
 
@@ -995,20 +1494,18 @@ function filterProducts(category,button){
     button.classList.add('active');
 
 
-    cards.forEach(card=>{
+    cards.forEach(function(card){
 
         if(category === 'all'){
 
             card.style.display = 'block';
 
         }
-
         else if(card.dataset.category === category){
 
             card.style.display = 'block';
 
         }
-
         else{
 
             card.style.display = 'none';
@@ -1020,20 +1517,20 @@ function filterProducts(category,button){
 }
 
 
-/* ================= ORDER MODAL ================= */
+/* ================= ORDER ================= */
 
 let selectedProduct = '';
 
 
 function openOrder(product,price){
 
-    selectedProduct = product;
+    selectedProduct =
+        product + ' — ' + price;
 
 
     document.getElementById(
         'selectedProduct'
-    ).innerText =
-        product + ' — ' + price;
+    ).innerText = selectedProduct;
 
 
     document.getElementById(
@@ -1075,7 +1572,7 @@ function submitModalOrder(){
 
     alert(
         'আপনার অর্ডার গ্রহণ করা হয়েছে।\n\n' +
-        'পণ্য: ' + selectedProduct +
+        'প্যাকেজ: ' + selectedProduct +
         '\nলেনদেন নম্বর: ' + trx
     );
 
@@ -1112,7 +1609,7 @@ function submitPayment(){
 
 
     alert(
-        'লেনদেন নম্বর সফলভাবে গ্রহণ করা হয়েছে।\n\n' +
+        'লেনদেন নম্বর গ্রহণ করা হয়েছে।\n\n' +
         'লেনদেন নম্বর: ' + trx
     );
 
@@ -1124,7 +1621,7 @@ function submitPayment(){
 }
 
 
-/* ================= MODAL CLOSE ================= */
+/* ================= CLOSE MODAL ================= */
 
 window.onclick = function(event){
 
