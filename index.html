@@ -1,78 +1,324 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>KSA PANEL</title>
+
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
+
+<title>KSA Panel</title>
+
 <style>
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,"Noto Sans Bengali",sans-serif;color:#eefcff;background:#021525;overflow-x:hidden}
-:root{--cyan:#56e7ff;--blue:#0788d8;--glass:rgba(2,25,42,.68)}
-.ocean{position:fixed;inset:0;z-index:-5;overflow:hidden;background:linear-gradient(#062e49 0%,#087b9b 43%,#064f69 72%,#021b2c 100%)}
-.ocean:before{content:"";position:absolute;inset:-20%;background:radial-gradient(ellipse at 50% 0%,rgba(190,250,255,.5),transparent 25%),linear-gradient(105deg,transparent 35%,rgba(190,250,255,.11) 43%,transparent 51%),linear-gradient(75deg,transparent 50%,rgba(180,250,255,.09) 57%,transparent 64%);animation:light 9s ease-in-out infinite alternate}
-.ocean:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(0,18,30,.15) 60%,rgba(0,8,16,.58) 100%)}
-.ray{position:absolute;top:-15%;width:120px;height:90%;background:linear-gradient(180deg,rgba(220,255,255,.13),transparent);filter:blur(12px);transform:rotate(13deg);animation:ray 11s ease-in-out infinite alternate}.r1{left:15%}.r2{left:48%;width:180px;animation-delay:-4s}.r3{right:12%;animation-delay:-7s}
-.whale{position:absolute;top:16%;left:-24%;width:360px;height:150px;opacity:.62;filter:drop-shadow(0 8px 12px rgba(0,0,0,.25));animation:whale 28s linear infinite}
-.whale .body{position:absolute;left:45px;top:25px;width:270px;height:95px;border-radius:50% 55% 48% 52%;background:linear-gradient(180deg,#607b89,#1f3e50);box-shadow:inset 0 10px 15px rgba(255,255,255,.15)}
-.whale .fin1,.whale .fin2{position:absolute;background:#29495b;width:105px;height:42px;border-radius:100% 0 100% 0;top:73px}.fin1{left:55px;transform:rotate(28deg)}.fin2{right:42px;transform:rotate(-28deg)}
-.whale .tail{position:absolute;right:0;top:38px;width:75px;height:65px}.tail:before,.tail:after{content:"";position:absolute;width:62px;height:30px;background:#2b4c5c;border-radius:100% 0 100% 0}.tail:before{transform:rotate(18deg)}.tail:after{transform:rotate(-18deg);top:25px}
-.fish{position:absolute;width:70px;height:30px;opacity:.78;animation:fish 16s linear infinite}.fish:before{content:"";position:absolute;left:16px;top:5px;width:42px;height:20px;border-radius:60% 45% 45% 60%;background:linear-gradient(90deg,#d6b675,#587d87)}.fish:after{content:"";position:absolute;left:0;top:5px;border-top:10px solid transparent;border-bottom:10px solid transparent;border-right:20px solid #78939a}.f1{top:39%;left:-80px}.f2{top:52%;left:-180px;animation-delay:-6s;transform:scale(.7)}.f3{top:60%;left:-120px;animation-delay:-10s;transform:scale(.55)}
-.seaweed{position:absolute;bottom:-5px;width:14px;border-radius:100% 100% 0 0;background:linear-gradient(90deg,#062d28,#23735a,#0a3e34);transform-origin:bottom;animation:sway 4s ease-in-out infinite}
-.seaweed i{position:absolute;width:25px;height:80px;border-radius:100% 0 100% 0;background:#0b513e;opacity:.9}.seaweed i:nth-child(1){left:-18px;bottom:70px;transform:rotate(-20deg)}.seaweed i:nth-child(2){right:-18px;bottom:130px;transform:rotate(25deg)}.seaweed i:nth-child(3){left:-20px;bottom:190px;transform:rotate(-30deg)}
-.s1{left:4%;height:260px}.s2{left:13%;height:190px;animation-delay:-1s}.s3{left:82%;height:230px;animation-delay:-2s}.s4{left:93%;height:310px;animation-delay:-3s}.s5{left:30%;height:140px;opacity:.55}
-.diver{position:absolute;top:46%;left:-100px;width:100px;height:90px;animation:diver 24s linear infinite}.head{position:absolute;left:38px;top:5px;width:19px;height:19px;border-radius:50%;background:#172936}.tank{position:absolute;left:52px;top:27px;width:12px;height:35px;border-radius:7px;background:#243c48}.person{position:absolute;left:34px;top:24px;width:40px;height:18px;border-radius:15px;background:#172936;transform:rotate(-8deg)}.leg{position:absolute;left:22px;top:45px;width:35px;height:9px;background:#172936;transform:rotate(25deg)}.net{position:absolute;right:-8px;top:28px;width:42px;height:30px;border:2px solid rgba(210,240,245,.75);border-radius:50% 50% 10% 10%;transform:rotate(-18deg)}
-.bubbles{position:absolute;left:18px;top:0}.bubbles i{display:block;width:5px;height:5px;border:1px solid #d8fbff;border-radius:50%;margin:8px;animation:bubble 3s infinite}
-.ui{position:relative;z-index:3;width:min(1100px,92%);margin:auto}
-header{position:fixed;z-index:10;top:0;left:0;right:0;padding:14px 0;background:rgba(1,16,28,.45);backdrop-filter:blur(18px);border-bottom:1px solid rgba(150,240,255,.18)}
-nav{display:flex;justify-content:space-between;align-items:center}.brand{font-weight:900;letter-spacing:4px;font-size:21px;text-shadow:0 0 20px #51eaff}.lang{background:rgba(0,40,60,.65);color:#fff;border:1px solid #5bdcf044;border-radius:20px;padding:8px 14px}
-.hero{min-height:100vh;display:grid;place-items:center;text-align:center;padding:100px 0 60px}.hero h1{font-size:clamp(44px,9vw,90px);letter-spacing:9px;margin:0;text-shadow:0 0 35px rgba(72,231,255,.65)}.hero p{font-size:18px;letter-spacing:4px;color:#d1f8ff}.cta{display:inline-block;margin-top:25px;padding:15px 38px;border-radius:40px;background:linear-gradient(135deg,#1bdcff,#0877e8);font-weight:900;color:#fff;text-decoration:none;box-shadow:0 15px 45px #007ed855}
-section{padding:35px 0}.glass{background:var(--glass);border:1px solid #75e9ff33;border-radius:28px;padding:25px;backdrop-filter:blur(17px);box-shadow:0 20px 70px #0008}.title{text-align:center;font-size:28px;margin:0 0 22px}.cats{display:flex;gap:8px;overflow:auto;margin-bottom:18px}.cats button{white-space:nowrap;background:#07344dcc;border:1px solid #75e9ff2b;color:#eaffff;border-radius:20px;padding:10px 14px}.cats .active{background:#0a9ce9}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}.card{background:#052b40aa;border:1px solid #75e9ff22;border-radius:20px;padding:19px}.card h3{margin:0 0 10px}.price{font-size:22px;font-weight:900;color:#78ebff;margin-bottom:15px}.order{width:100%;padding:12px;border:0;border-radius:13px;background:#0b8fe8;color:white;font-weight:900}
-.payment{scroll-margin-top:80px}.pay{max-width:700px;margin:auto}.bk{display:flex;gap:15px;align-items:center;padding:16px;border-radius:18px;background:#062e43aa;margin-bottom:15px}.bklogo{width:54px;height:54px;border-radius:15px;background:#e21370;display:grid;place-items:center;font-weight:900;font-size:24px}.number{font-size:24px;font-weight:900}.selected,.hint{padding:14px;border-radius:15px;background:#06384faa;margin-bottom:14px}.hint{line-height:1.6}.pay input{width:100%;padding:16px;border-radius:15px;background:#011b2ccc;color:#fff;border:1px solid #75e9ff44;outline:0;font-size:16px}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.buttons a{padding:14px;border-radius:14px;text-align:center;color:#fff;font-weight:900}.wa{background:#18b95c}.tg{background:#168de2}.nums{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}.num{padding:10px 14px;border-radius:13px;background:#06344bbb;border:1px solid #75e9ff22}footer{text-align:center;padding:35px;color:#b9dce5}
-@keyframes light{to{transform:translateX(4%) translateY(3%) rotate(2deg)}}@keyframes ray{to{transform:rotate(18deg) translateX(80px)}}@keyframes whale{0%{left:-28%;transform:scale(.8)}45%{left:45%;transform:scale(.95)}100%{left:110%;transform:scale(.75)}}@keyframes fish{from{left:-100px}to{left:110%}}@keyframes sway{50%{transform:rotate(5deg)}100%{transform:rotate(-4deg)}}@keyframes diver{0%{left:-120px;transform:scale(.8)}50%{left:55%;top:40%;transform:scale(.9)}100%{left:110%;top:49%;transform:scale(.7)}}@keyframes bubble{50%{transform:translateY(-18px);opacity:.2}}
-@media(max-width:600px){.hero h1{font-size:39px;letter-spacing:5px}.hero p{font-size:13px}.buttons{grid-template-columns:1fr}.glass{padding:18px}}
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #061f2b;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background: #061f2b;
+}
+
+.visual {
+    position: relative;
+
+    width: min(100vw, 1024px);
+
+    aspect-ratio: 1024 / 1536;
+
+    background-image: url("background.png");
+
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+
+
+/* =========================
+   ORDER NOW BUTTON
+========================= */
+
+.order-button {
+    position: absolute;
+
+    left: 17.5%;
+    top: 47.7%;
+
+    width: 65%;
+    height: 6.3%;
+
+    border: none;
+    border-radius: 999px;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    z-index: 10;
+}
+
+
+/* =========================
+   TRANSACTION INPUT
+========================= */
+
+.transaction-input {
+    position: absolute;
+
+    left: 20.5%;
+    top: 77.3%;
+
+    width: 59%;
+    height: 4.8%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 16px;
+
+    padding: 0 20px;
+
+    z-index: 20;
+}
+
+
+/* =========================
+   SUBMIT BUTTON
+========================= */
+
+.submit-button {
+    position: absolute;
+
+    left: 20%;
+    top: 84.7%;
+
+    width: 60%;
+    height: 5%;
+
+    border: none;
+    border-radius: 999px;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    z-index: 10;
+}
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message {
+    position: fixed;
+
+    left: 50%;
+    bottom: 20px;
+
+    transform: translateX(-50%);
+
+    display: none;
+
+    padding: 10px 18px;
+
+    border-radius: 30px;
+
+    background: rgba(0,0,0,.75);
+
+    color: white;
+
+    font-size: 14px;
+
+    z-index: 100;
+}
+
+
+/* Desktop */
+
+@media (min-width: 1025px) {
+
+    .visual {
+        box-shadow:
+        0 0 60px rgba(0,0,0,.4);
+    }
+
+}
 </style>
 </head>
+
+
 <body>
-<div class="ocean">
- <div class="ray r1"></div><div class="ray r2"></div><div class="ray r3"></div>
- <div class="whale"><div class="body"></div><div class="fin1"></div><div class="fin2"></div><div class="tail"></div></div>
- <div class="fish f1"></div><div class="fish f2"></div><div class="fish f3"></div>
- <div class="diver"><div class="bubbles"><i></i><i></i><i></i></div><div class="head"></div><div class="tank"></div><div class="person"></div><div class="leg"></div><div class="net"></div></div>
- <div class="seaweed s1"><i></i><i></i><i></i></div><div class="seaweed s2"><i></i><i></i></div><div class="seaweed s3"><i></i><i></i><i></i></div><div class="seaweed s4"><i></i><i></i><i></i></div><div class="seaweed s5"><i></i></div>
+
+<div class="page">
+
+    <main class="visual">
+
+        <!-- ORDER NOW -->
+        <button
+            class="order-button"
+            id="orderButton"
+            aria-label="Order Now">
+        </button>
+
+
+        <!-- TRANSACTION ID -->
+        <input
+            type="text"
+            id="transactionId"
+            class="transaction-input"
+            placeholder=""
+            autocomplete="off"
+            aria-label="Transaction ID or bKash Number"
+        >
+
+
+        <!-- SUBMIT -->
+        <button
+            class="submit-button"
+            id="submitButton"
+            aria-label="Submit">
+        </button>
+
+    </main>
+
 </div>
 
-<header><div class="ui"><nav><div class="brand">KSA PANEL</div><button class="lang" onclick="toggleLang()">বাংলা / English</button></nav></div></header>
 
-<div class="ui">
-<section class="hero">
-<div>
-<h1>KSA PANEL</h1><p>Fast • Secure • Trusted</p><a class="cta" href="#products">অর্ডার করুন ›</a>
-</div>
-</section>
+<div id="message" class="message"></div>
 
-<section id="products"><div class="glass"><h2 class="title">প্যানেল ও সার্ভিস</h2><div class="cats" id="cats"></div><div class="grid" id="grid"></div></div></section>
-
-<section class="payment" id="payment"><div class="glass pay"><h2 class="title">বিকাশ পেমেন্ট</h2><div class="selected" id="selected">কোনো পণ্য নির্বাচন করা হয়নি।</div><div class="bk"><div class="bklogo">৳</div><div><small>বিকাশে পেমেন্ট পাঠান</small><div class="number">01832137297</div></div></div><div class="hint">আপনার ট্রানজেকশন আইডি দিন অথবা পুরো নাম্বার দিন</div><input id="txn" placeholder="ট্রানজেকশন আইডি অথবা পুরো নাম্বার"><div class="buttons"><a class="wa" href="#" onclick="wa();return false">WhatsApp</a><a class="tg" href="#" onclick="tg();return false">Telegram</a></div></div></section>
-
-<section><div class="glass"><h2 class="title">সাম্প্রতিক নম্বর</h2><div class="nums"><span class="num">016****925</span><span class="num">018****314</span><span class="num">017****681</span><span class="num">019****472</span><span class="num">013****806</span><span class="num">015****239</span></div></div></section>
-<footer>KSA PANEL • Telegram: @ksapanel473</footer>
-</div>
 
 <script>
-const P=[
-["সেনসি","১০০ টাকা"],["ড্রাগ হেডশট","১৪৫ টাকা"],["লোকেশন","৫০ টাকা"],
-["নন রুট — ৩০ দিন","৩০০ টাকা"],["নন রুট — ১ ওবিবি","৭০০ টাকা"],["নন রুট — পারমানেন্ট","১৪০০ টাকা"],
-["রুট — ৩০ দিন","৪৫০ টাকা"],["রুট — ১ ওবিবি","৯৭০ টাকা"],["রুট — পারমানেন্ট","৩৩০০ টাকা"],
-["আইফোন — ৩০ দিন","৪০০ টাকা"],["আইফোন — ১ ওবিবি","৭০০ টাকা"],["আইফোন — পারমানেন্ট","৪৫৭০ টাকা"],
-["পিসি প্যানেল — ৩০ দিন","৬০০ টাকা"],["পিসি প্যানেল — ১ ওবিবি","১১৮০ টাকা"],["পিসি প্যানেল — পারমানেন্ট","২৩০০ টাকা"]];
-const cats=["সব","সেনসি","ড্রাগ হেডশট","লোকেশন","নন রুট","রুট","আইফোন","পিসি প্যানেল"];
-let active="সব";
-function draw(){document.getElementById("cats").innerHTML=cats.map(c=>`<button class="${c==active?'active':''}" onclick="active='${c}';draw()">${c}</button>`).join("");let a=active=="সব"?P:P.filter(x=>x[0].startsWith(active));document.getElementById("grid").innerHTML=a.map(x=>`<div class="card"><h3>${x[0]}</h3><div class="price">${x[1]}</div><button class="order" onclick="choose('${x[0]}','${x[1]}')">অর্ডার করুন</button></div>`).join("")}
-function choose(n,p){document.getElementById("selected").textContent=`নির্বাচিত: ${n} — ${p}`;document.getElementById("payment").scrollIntoView({behavior:"smooth"});setTimeout(()=>document.getElementById("txn").focus(),600)}
-function msg(){return "KSA PANEL\n"+document.getElementById("selected").textContent+"\nট্রানজেকশন আইডি / নাম্বার: "+(document.getElementById("txn").value||"দেওয়া হয়নি")}
-function wa(){location.href="https://wa.me/8801832137297?text="+encodeURIComponent(msg())}
-function tg(){location.href="https://t.me/ksapanel473?text="+encodeURIComponent(msg())}
-function toggleLang(){alert("English mode / বাংলা mode")}
-draw();
+
+/* =========================
+   SETTINGS
+========================= */
+
+const WHATSAPP_NUMBER = "8801832137297";
+
+
+/* =========================
+   MESSAGE FUNCTION
+========================= */
+
+function showMessage(text) {
+
+    const message =
+        document.getElementById("message");
+
+    message.innerText = text;
+
+    message.style.display = "block";
+
+    setTimeout(() => {
+
+        message.style.display = "none";
+
+    }, 2500);
+}
+
+
+/* =========================
+   ORDER NOW
+========================= */
+
+document
+.getElementById("orderButton")
+.addEventListener("click", function () {
+
+    /*
+       এখানে তোমার আসল Order Now
+       / bKash payment link বসাবে।
+
+       Example:
+
+       window.location.href =
+       "https://example.com";
+    */
+
+    showMessage("Order Now clicked");
+
+});
+
+
+/* =========================
+   SUBMIT → WHATSAPP
+========================= */
+
+document
+.getElementById("submitButton")
+.addEventListener("click", function () {
+
+    const transactionId =
+        document
+        .getElementById("transactionId")
+        .value
+        .trim();
+
+
+    /* Empty check */
+
+    if (!transactionId) {
+
+        showMessage(
+            "Transaction ID দিন"
+        );
+
+        document
+        .getElementById("transactionId")
+        .focus();
+
+        return;
+    }
+
+
+    /* WhatsApp message */
+
+    const message =
+        "KSA PANEL Order\n\n" +
+        "Transaction ID / bKash Number: " +
+        transactionId;
+
+
+    /* WhatsApp URL */
+
+    const whatsappURL =
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+    /* Open WhatsApp */
+
+    window.location.href = whatsappURL;
+
+});
+
 </script>
+
 </body>
 </html>
