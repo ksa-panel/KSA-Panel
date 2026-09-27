@@ -18,49 +18,94 @@ html{
 
 body{
   font-family:Arial,"Noto Sans Bengali",sans-serif;
-  background:#00101c;
   color:#fff;
   overflow-x:hidden;
+  background:#006b91;
 }
 
 /* =========================
-   OCEAN
+   OCEAN BACKGROUND
 ========================= */
+
 .ocean{
   position:fixed;
   inset:0;
-  z-index:-10;
+  z-index:-20;
   overflow:hidden;
   background:
-    radial-gradient(circle at 50% 0%,rgba(30,210,255,.18),transparent 35%),
-    linear-gradient(#001b2b 0%,#003e59 38%,#002b3d 70%,#00151f 100%);
+    linear-gradient(
+      180deg,
+      #006f9d 0%,
+      #008db2 30%,
+      #007e9f 55%,
+      #006985 75%,
+      #00566f 100%
+    );
 }
 
-.water-light{
+.ocean:after{
+  content:"";
   position:absolute;
-  top:-120px;
-  left:50%;
-  width:900px;
-  height:500px;
-  transform:translateX(-50%);
-  background:radial-gradient(ellipse,rgba(120,240,255,.16),transparent 68%);
-  animation:lightMove 9s ease-in-out infinite alternate;
+  inset:0;
+  background:
+    radial-gradient(
+      ellipse at 50% 5%,
+      rgba(220,255,255,.25),
+      transparent 35%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.04),
+      rgba(0,35,55,.08)
+    );
+  pointer-events:none;
 }
 
-@keyframes lightMove{
-  from{transform:translateX(-55%) rotate(-3deg) scale(1)}
-  to{transform:translateX(-45%) rotate(3deg) scale(1.12)}
+.water-rays{
+  position:absolute;
+  top:-180px;
+  left:10%;
+  width:80%;
+  height:700px;
+  background:
+    linear-gradient(
+      105deg,
+      transparent 25%,
+      rgba(210,255,255,.12) 35%,
+      transparent 47%
+    ),
+    linear-gradient(
+      75deg,
+      transparent 35%,
+      rgba(210,255,255,.09) 45%,
+      transparent 58%
+    );
+  transform:skewX(-8deg);
+  animation:rays 9s ease-in-out infinite alternate;
+}
+
+@keyframes rays{
+  from{
+    transform:translateX(-30px) skewX(-8deg);
+    opacity:.55;
+  }
+  to{
+    transform:translateX(35px) skewX(-8deg);
+    opacity:1;
+  }
 }
 
 /* =========================
    BUBBLES
 ========================= */
+
 .bubble{
   position:absolute;
   bottom:-50px;
-  border:1px solid rgba(210,250,255,.45);
+  border:1px solid rgba(255,255,255,.65);
   border-radius:50%;
-  background:rgba(255,255,255,.04);
+  background:rgba(255,255,255,.12);
+  box-shadow:0 0 8px rgba(220,255,255,.3);
   animation:bubbleUp linear infinite;
 }
 
@@ -69,8 +114,12 @@ body{
     transform:translateY(0) translateX(0);
     opacity:0;
   }
-  10%{opacity:.7}
-  50%{transform:translateY(-50vh) translateX(25px)}
+  10%{
+    opacity:.8;
+  }
+  50%{
+    transform:translateY(-50vh) translateX(25px);
+  }
   100%{
     transform:translateY(-115vh) translateX(-30px);
     opacity:0;
@@ -78,84 +127,132 @@ body{
 }
 
 /* =========================
-   REALISTIC SEAWEED
+   SEABED
 ========================= */
+
 .seabed{
   position:absolute;
   bottom:0;
   left:0;
   width:100%;
-  height:100px;
+  height:120px;
   background:
-    radial-gradient(ellipse at 20% 20%,#123f46,transparent 35%),
-    radial-gradient(ellipse at 70% 30%,#0b3038,transparent 40%),
-    linear-gradient(#102d35,#061a22);
+    radial-gradient(
+      ellipse at 10% 30%,
+      #25808a 0,
+      transparent 35%
+    ),
+    radial-gradient(
+      ellipse at 55% 20%,
+      #176a78 0,
+      transparent 40%
+    ),
+    linear-gradient(
+      180deg,
+      #176675,
+      #124c59
+    );
   opacity:.95;
 }
 
 .rock{
   position:absolute;
   bottom:0;
-  width:100px;
-  height:45px;
-  border-radius:55% 45% 20% 20%;
-  background:linear-gradient(145deg,#26474d,#0b2229);
-  box-shadow:inset -15px -10px 20px rgba(0,0,0,.45);
+  height:42px;
+  width:105px;
+  border-radius:60% 50% 20% 20%;
+  background:
+    radial-gradient(circle at 30% 25%,#5c8990,transparent 15%),
+    linear-gradient(145deg,#386a72,#17444e);
+  box-shadow:inset -15px -10px 20px rgba(0,0,0,.22);
 }
 
-.rock1{left:5%}
-.rock2{left:24%;width:130px;height:55px}
-.rock3{left:52%;width:90px}
-.rock4{left:76%;width:145px;height:50px}
-.rock5{left:91%;width:80px}
+.rock1{left:4%}
+.rock2{left:25%;width:140px;height:55px}
+.rock3{left:52%;width:95px}
+.rock4{left:76%;width:150px;height:55px}
+.rock5{left:92%;width:85px}
 
-.weed-cluster{
+/* =========================
+   REALISTIC SEAWEED
+========================= */
+
+.weed{
   position:absolute;
-  bottom:20px;
-  width:110px;
+  bottom:35px;
+  width:100px;
   height:330px;
   transform-origin:bottom center;
   animation:weedSway 5s ease-in-out infinite;
 }
 
-.weed-cluster.slow{
+.weed:nth-of-type(2){
   animation-duration:7s;
 }
 
-.weed-cluster.fast{
+.weed:nth-of-type(3){
   animation-duration:4s;
 }
 
 @keyframes weedSway{
-  0%,100%{transform:rotate(-2deg)}
-  50%{transform:rotate(5deg)}
+  0%,100%{
+    transform:rotate(-3deg);
+  }
+  50%{
+    transform:rotate(6deg);
+  }
 }
 
 .stem{
   position:absolute;
   bottom:0;
   left:50%;
-  width:9px;
-  height:280px;
+  width:8px;
   border-radius:100%;
-  background:linear-gradient(90deg,#063f2b,#15945f,#07502f);
+  background:
+    linear-gradient(
+      90deg,
+      #07513d,
+      #21a875,
+      #08724f
+    );
   transform-origin:bottom;
 }
 
-.stem.s1{transform:rotate(-18deg);height:240px}
-.stem.s2{transform:rotate(-7deg);height:310px}
-.stem.s3{transform:rotate(8deg);height:270px}
-.stem.s4{transform:rotate(18deg);height:225px}
+.s1{
+  height:250px;
+  transform:rotate(-18deg);
+}
+
+.s2{
+  height:310px;
+  transform:rotate(-7deg);
+}
+
+.s3{
+  height:275px;
+  transform:rotate(9deg);
+}
+
+.s4{
+  height:230px;
+  transform:rotate(20deg);
+}
 
 .leaf{
   position:absolute;
-  width:24px;
-  height:95px;
+  width:23px;
+  height:90px;
   border-radius:100% 0 100% 0;
-  background:linear-gradient(90deg,#064a30,#20a96d,#087345);
+  background:
+    linear-gradient(
+      90deg,
+      #075039,
+      #25b47b,
+      #08774e
+    );
+  opacity:.95;
   transform-origin:bottom center;
-  opacity:.9;
-  filter:drop-shadow(0 0 3px rgba(0,255,160,.12));
 }
 
 .leaf:after{
@@ -165,85 +262,118 @@ body{
   top:5%;
   width:2px;
   height:90%;
-  background:rgba(180,255,210,.2);
+  background:rgba(210,255,230,.25);
 }
 
-.l1{left:15px;bottom:105px;transform:rotate(-42deg) scale(.8)}
-.l2{left:5px;bottom:165px;transform:rotate(-58deg) scale(.65)}
-.l3{left:36px;bottom:125px;transform:rotate(38deg) scale(.9)}
-.l4{left:45px;bottom:190px;transform:rotate(55deg) scale(.68)}
-.l5{left:25px;bottom:220px;transform:rotate(-30deg) scale(.6)}
-.l6{left:58px;bottom:245px;transform:rotate(30deg) scale(.55)}
-.l7{left:65px;bottom:80px;transform:rotate(60deg) scale(.75)}
+.l1{
+  left:12px;
+  bottom:95px;
+  transform:rotate(-42deg) scale(.8);
+}
 
-.weed-far{
-  opacity:.45;
-  transform:scale(.65);
-  filter:blur(1px);
+.l2{
+  left:5px;
+  bottom:155px;
+  transform:rotate(-58deg) scale(.65);
+}
+
+.l3{
+  left:35px;
+  bottom:115px;
+  transform:rotate(38deg) scale(.9);
+}
+
+.l4{
+  left:45px;
+  bottom:180px;
+  transform:rotate(55deg) scale(.7);
+}
+
+.l5{
+  left:23px;
+  bottom:215px;
+  transform:rotate(-30deg) scale(.6);
+}
+
+.l6{
+  left:58px;
+  bottom:235px;
+  transform:rotate(30deg) scale(.55);
+}
+
+.l7{
+  left:65px;
+  bottom:75px;
+  transform:rotate(60deg) scale(.75);
 }
 
 /* =========================
-   GIANT TOP VIEW WHALE
+   BIG WHALE - TOP VIEW
 ========================= */
+
 .whale{
   position:absolute;
-  top:45px;
+  top:35px;
   left:50%;
-  width:300px;
+  width:330px;
   height:170px;
-  transform:translateX(-50%);
-  animation:whaleSwim 14s ease-in-out infinite;
-  opacity:.68;
+  animation:whaleMove 15s ease-in-out infinite;
+  opacity:.75;
 }
 
 .whale-body{
   position:absolute;
-  left:45px;
+  left:55px;
   top:20px;
-  width:210px;
+  width:220px;
   height:125px;
-  border-radius:55% 48% 52% 45%;
+  border-radius:55% 50% 52% 48%;
   background:
-    radial-gradient(ellipse at 50% 25%,#547d91,#23485b 50%,#102d3c 100%);
+    radial-gradient(
+      ellipse at 50% 20%,
+      #7897a5,
+      #3b6475 48%,
+      #1c4658 100%
+    );
   box-shadow:
-    inset 0 15px 20px rgba(255,255,255,.08),
-    0 10px 30px rgba(0,0,0,.25);
+    inset 0 12px 18px rgba(255,255,255,.16),
+    0 10px 30px rgba(0,50,70,.25);
 }
 
 .whale-head{
   position:absolute;
-  left:25px;
-  top:48px;
+  left:32px;
+  top:49px;
   width:75px;
-  height:75px;
+  height:70px;
   border-radius:50%;
-  background:#294f61;
+  background:#315c6c;
 }
 
 .whale-fin{
   position:absolute;
   top:72px;
-  width:75px;
-  height:32px;
-  background:#173a4a;
+  width:82px;
+  height:34px;
+  background:#204858;
   border-radius:100% 0;
 }
 
 .whale-fin.left{
-  left:25px;
+  left:30px;
   transform:rotate(-28deg);
 }
 
 .whale-fin.right{
-  right:25px;
+  right:30px;
   transform:rotate(28deg) scaleX(-1);
 }
 
 .whale-tail{
   position:absolute;
   right:0;
-  top:60px;
-  width:65px;
+  top:62px;
+  width:70px;
   height:60px;
 }
 
@@ -251,9 +381,9 @@ body{
 .whale-tail:after{
   content:"";
   position:absolute;
-  width:55px;
-  height:30px;
-  background:#183b4c;
+  width:58px;
+  height:32px;
+  background:#204858;
   border-radius:100% 0;
 }
 
@@ -267,93 +397,121 @@ body{
 
 .whale-eye{
   position:absolute;
-  left:49px;
-  top:73px;
+  left:55px;
+  top:72px;
   width:6px;
   height:6px;
-  background:#06131a;
+  background:#03151d;
   border-radius:50%;
 }
 
-@keyframes whaleSwim{
-  0%{transform:translateX(-150%) rotate(-3deg)}
-  45%{transform:translateX(-20%) rotate(2deg)}
-  55%{transform:translateX(-20%) rotate(2deg)}
-  100%{transform:translateX(100%) rotate(-3deg)}
+@keyframes whaleMove{
+  0%{
+    transform:translateX(-160%) rotate(-4deg);
+  }
+  45%{
+    transform:translateX(-30%) rotate(2deg);
+  }
+  55%{
+    transform:translateX(-30%) rotate(2deg);
+  }
+  100%{
+    transform:translateX(110%) rotate(-3deg);
+  }
 }
 
 /* =========================
-   DIVERS CATCHING FISH
+   DIVERS
 ========================= */
+
 .diver{
   position:absolute;
-  z-index:4;
-  width:130px;
+  width:140px;
   height:110px;
-  animation:diverSwim 8s ease-in-out infinite;
+  z-index:4;
+  animation:diverMove 8s ease-in-out infinite;
 }
 
 .diver.one{
-  left:18%;
-  top:55%;
+  left:14%;
+  top:56%;
 }
 
 .diver.two{
-  right:15%;
+  right:12%;
   top:70%;
   animation-delay:2s;
 }
 
 .diver-person{
   position:absolute;
-  font-size:48px;
-  transform:rotate(-20deg);
+  font-size:50px;
+  filter:drop-shadow(0 5px 5px rgba(0,0,0,.25));
 }
 
 .net{
   position:absolute;
   right:0;
   top:30px;
-  width:70px;
-  height:55px;
-  border:2px solid rgba(220,255,255,.7);
-  border-radius:0 0 50% 50%;
+  width:72px;
+  height:58px;
+  border:2px solid rgba(240,255,255,.8);
+  border-radius:0 0 55% 55%;
   transform:rotate(-25deg);
   background:
-    repeating-linear-gradient(45deg,transparent 0 8px,rgba(220,255,255,.45) 9px 10px),
-    repeating-linear-gradient(-45deg,transparent 0 8px,rgba(220,255,255,.45) 9px 10px);
+    repeating-linear-gradient(
+      45deg,
+      transparent 0 8px,
+      rgba(230,255,255,.55) 9px 10px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0 8px,
+      rgba(230,255,255,.55) 9px 10px
+    );
 }
 
-@keyframes diverSwim{
-  0%,100%{transform:translate(0,0) rotate(-3deg)}
-  50%{transform:translate(55px,-30px) rotate(5deg)}
+@keyframes diverMove{
+  0%,100%{
+    transform:translate(0,0) rotate(-3deg);
+  }
+  50%{
+    transform:translate(55px,-30px) rotate(5deg);
+  }
 }
 
 /* =========================
-   FLOATING FISH
+   FREE FISH
 ========================= */
+
 .free-fish{
   position:absolute;
-  font-size:24px;
-  animation:fishSwim linear infinite;
-  opacity:.8;
+  font-size:25px;
+  z-index:3;
+  animation:fishMove linear infinite;
+  opacity:.9;
 }
 
-@keyframes fishSwim{
-  from{transform:translateX(-120px)}
-  to{transform:translateX(calc(100vw + 150px))}
+@keyframes fishMove{
+  from{
+    transform:translateX(-120px);
+  }
+  to{
+    transform:translateX(calc(100vw + 150px));
+  }
 }
 
 /* =========================
    HEADER
 ========================= */
+
 header{
   position:relative;
   z-index:10;
-  padding:15px;
-  background:rgba(0,10,18,.55);
-  backdrop-filter:blur(10px);
-  border-bottom:1px solid rgba(100,230,255,.12);
+  padding:14px;
+  background:rgba(0,72,100,.42);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(220,255,255,.2);
 }
 
 .topbar{
@@ -362,14 +520,16 @@ header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:15px;
 }
 
-.logo-text{
+.brand{
+  font-size:20px;
   font-weight:900;
   letter-spacing:3px;
-  font-size:19px;
-  color:#bafaff;
+  color:#e4ffff;
+  text-shadow:
+    0 0 8px #00eaff,
+    0 0 20px rgba(0,220,255,.6);
 }
 
 .lang-switch{
@@ -378,34 +538,87 @@ header{
 }
 
 .lang-switch button{
-  border:1px solid rgba(0,230,255,.35);
-  background:rgba(0,40,60,.6);
-  color:#fff;
   padding:7px 12px;
   border-radius:8px;
+  border:1px solid rgba(220,255,255,.35);
+  background:rgba(0,70,95,.55);
+  color:#fff;
   cursor:pointer;
 }
 
 /* =========================
-   FISH LOGO
+   CLEAR KSA PANEL TITLE
 ========================= */
+
 .logo-area{
   position:relative;
-  max-width:900px;
-  height:190px;
-  margin:15px auto 0;
+  max-width:1000px;
+  margin:15px auto 5px;
+  min-height:150px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
 
-#fishLogo{
+.ksa-title{
+  position:relative;
+  z-index:3;
+  text-align:center;
+  font-size:clamp(42px,9vw,90px);
+  font-weight:1000;
+  letter-spacing:8px;
+  color:#f5ffff;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 12px #00eaff,
+    0 0 25px #00cfff,
+    0 0 50px rgba(0,220,255,.8);
+  animation:titleGlow 3s ease-in-out infinite;
+}
+
+@keyframes titleGlow{
+  0%,100%{
+    transform:scale(1);
+    text-shadow:
+      0 0 5px #fff,
+      0 0 12px #00eaff,
+      0 0 25px #00cfff;
+  }
+  50%{
+    transform:scale(1.025);
+    text-shadow:
+      0 0 8px #fff,
+      0 0 20px #00eaff,
+      0 0 45px #00cfff;
+  }
+}
+
+.particle{
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#cfffff;
+  box-shadow:0 0 10px #00eaff;
+  animation:particleFloat 4s ease-in-out infinite;
+}
+
+@keyframes particleFloat{
+  0%,100%{
+    transform:translateY(0) scale(.7);
+    opacity:.35;
+  }
+  50%{
+    transform:translateY(-25px) scale(1.3);
+    opacity:1;
+  }
 }
 
 /* =========================
    MAIN
 ========================= */
+
 main{
   position:relative;
   z-index:5;
@@ -416,16 +629,17 @@ main{
 
 .notice{
   text-align:center;
-  padding:12px;
-  margin:12px 0;
+  padding:14px;
+  margin:12px 0 18px;
   border-radius:15px;
-  background:rgba(0,35,50,.75);
-  border:1px solid rgba(0,220,255,.2);
+  background:rgba(0,80,105,.58);
+  border:1px solid rgba(200,255,255,.2);
+  backdrop-filter:blur(8px);
 }
 
 .telegram{
   display:inline-block;
-  margin-top:8px;
+  margin-top:9px;
   padding:10px 18px;
   border-radius:10px;
   background:#159bd7;
@@ -435,8 +649,9 @@ main{
 }
 
 /* =========================
-   CATEGORY
+   CATEGORIES
 ========================= */
+
 .categories{
   display:flex;
   flex-wrap:wrap;
@@ -446,8 +661,8 @@ main{
 }
 
 .categories button{
-  border:1px solid rgba(0,220,255,.28);
-  background:rgba(0,40,60,.75);
+  border:1px solid rgba(220,255,255,.3);
+  background:rgba(0,76,100,.65);
   color:#fff;
   padding:9px 15px;
   border-radius:20px;
@@ -455,29 +670,33 @@ main{
 }
 
 .categories button.active{
-  background:#007ea3;
+  background:#0098bb;
+  box-shadow:0 0 12px rgba(0,220,255,.3);
 }
 
 /* =========================
    PRODUCTS
 ========================= */
+
 .products{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  grid-template-columns:
+    repeat(auto-fit,minmax(270px,1fr));
   gap:15px;
 }
 
 .product{
-  background:rgba(0,17,30,.78);
-  border:1px solid rgba(80,220,255,.16);
+  background:rgba(0,61,82,.7);
+  border:1px solid rgba(210,255,255,.2);
   border-radius:18px;
   padding:18px;
-  box-shadow:0 10px 35px rgba(0,0,0,.2);
-  backdrop-filter:blur(8px);
+  box-shadow:
+    0 10px 30px rgba(0,45,65,.25);
+  backdrop-filter:blur(9px);
 }
 
 .product h3{
-  color:#a8f7ff;
+  color:#d8ffff;
   margin-bottom:12px;
 }
 
@@ -487,7 +706,7 @@ main{
   align-items:center;
   gap:8px;
   padding:10px 0;
-  border-bottom:1px solid rgba(255,255,255,.07);
+  border-bottom:1px solid rgba(255,255,255,.12);
 }
 
 .package:last-child{
@@ -496,7 +715,7 @@ main{
 
 .package-order{
   border:0;
-  background:#0085a8;
+  background:#008eae;
   color:#fff;
   padding:7px 10px;
   border-radius:8px;
@@ -505,25 +724,61 @@ main{
 }
 
 .package-order:hover{
-  background:#00a9d2;
+  background:#00accb;
+}
+
+/* =========================
+   NUMBERS
+========================= */
+
+.numbers-section{
+  margin-top:25px;
+  padding:20px;
+  border-radius:18px;
+  background:rgba(0,70,92,.68);
+  border:1px solid rgba(220,255,255,.18);
+  backdrop-filter:blur(8px);
+}
+
+.numbers-section h2{
+  text-align:center;
+  color:#e5ffff;
+  margin-bottom:15px;
+}
+
+.number-list{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.masked-number{
+  padding:10px 15px;
+  border-radius:10px;
+  background:rgba(0,35,50,.45);
+  border:1px solid rgba(180,255,255,.15);
+  font-weight:bold;
+  letter-spacing:1px;
 }
 
 /* =========================
    PAYMENT
 ========================= */
+
 .section{
   margin-top:25px;
   padding:22px;
-  background:rgba(0,17,30,.82);
-  border:1px solid rgba(80,220,255,.16);
+  background:rgba(0,66,87,.74);
+  border:1px solid rgba(220,255,255,.2);
   border-radius:18px;
-  backdrop-filter:blur(8px);
+  backdrop-filter:blur(9px);
 }
 
 .section h2{
   text-align:center;
   margin-bottom:18px;
-  color:#aefaff;
+  color:#e2ffff;
 }
 
 .bkash{
@@ -539,7 +794,7 @@ main{
 
 .bkash-number{
   text-align:center;
-  font-size:25px;
+  font-size:26px;
   font-weight:bold;
   letter-spacing:2px;
   margin-bottom:15px;
@@ -550,29 +805,34 @@ main{
   padding:10px;
   margin-bottom:12px;
   border-radius:10px;
-  background:rgba(0,100,130,.2);
-  color:#bdfaff;
+  background:rgba(0,150,180,.18);
+  color:#e0ffff;
 }
 
 .payment-label{
   display:block;
   margin-bottom:7px;
-  color:#c7edf2;
+  color:#e5ffff;
 }
 
 #trx{
   width:100%;
   padding:13px;
-  border:1px solid rgba(0,220,255,.25);
+  border:1px solid rgba(220,255,255,.28);
   border-radius:10px;
-  background:rgba(0,0,0,.3);
-  color:white;
+  background:rgba(0,40,55,.45);
+  color:#fff;
   outline:none;
   font-size:15px;
 }
 
+#trx::placeholder{
+  color:rgba(235,255,255,.65);
+}
+
 #trx:focus{
-  border-color:#00dfff;
+  border-color:#00eaff;
+  box-shadow:0 0 15px rgba(0,220,255,.2);
 }
 
 .payment-actions{
@@ -586,7 +846,7 @@ main{
   border:0;
   padding:13px;
   border-radius:10px;
-  color:white;
+  color:#fff;
   cursor:pointer;
   font-weight:bold;
 }
@@ -602,29 +862,37 @@ main{
 /* =========================
    FOOTER
 ========================= */
+
 footer{
   position:relative;
   z-index:5;
   text-align:center;
   padding:25px;
-  background:rgba(0,8,14,.65);
-  color:#a9dce5;
+  background:rgba(0,58,76,.72);
+  color:#d4f8ff;
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
+
 @media(max-width:600px){
+
   .logo-area{
-    height:145px;
+    min-height:115px;
+  }
+
+  .ksa-title{
+    font-size:clamp(31px,10vw,52px);
+    letter-spacing:3px;
   }
 
   .whale{
-    transform:scale(.65);
-    left:50%;
-    top:25px;
+    transform:scale(.62);
   }
 
   .diver.one{
-    left:2%;
+    left:0;
   }
 
   .diver.two{
@@ -642,6 +910,7 @@ footer{
   .package-order{
     font-size:12px;
   }
+
 }
 </style>
 </head>
@@ -649,86 +918,123 @@ footer{
 <body>
 
 <!-- =========================
-     OCEAN BACKGROUND
+     OCEAN
 ========================= -->
+
 <div class="ocean">
 
-  <div class="water-light"></div>
+  <div class="water-rays"></div>
 
+  <!-- Bubbles -->
+  <div class="bubble" style="left:5%;width:10px;height:10px;animation-duration:8s"></div>
+  <div class="bubble" style="left:13%;width:7px;height:7px;animation-duration:11s"></div>
+  <div class="bubble" style="left:22%;width:13px;height:13px;animation-duration:9s"></div>
+  <div class="bubble" style="left:36%;width:8px;height:8px;animation-duration:12s"></div>
+  <div class="bubble" style="left:48%;width:11px;height:11px;animation-duration:10s"></div>
+  <div class="bubble" style="left:61%;width:7px;height:7px;animation-duration:13s"></div>
+  <div class="bubble" style="left:74%;width:12px;height:12px;animation-duration:9s"></div>
+  <div class="bubble" style="left:89%;width:8px;height:8px;animation-duration:12s"></div>
+
+  <!-- Seabed -->
   <div class="seabed"></div>
 
-  <!-- Rocks -->
   <div class="rock rock1"></div>
   <div class="rock rock2"></div>
   <div class="rock rock3"></div>
   <div class="rock rock4"></div>
   <div class="rock rock5"></div>
 
-  <!-- Realistic seaweed clusters -->
-  <div class="weed-cluster weed-far slow" style="left:2%">
-    <span class="stem s1"></span><span class="stem s2"></span>
-    <span class="stem s3"></span><span class="stem s4"></span>
-    <span class="leaf l1"></span><span class="leaf l2"></span>
-    <span class="leaf l3"></span><span class="leaf l4"></span>
-    <span class="leaf l5"></span><span class="leaf l6"></span>
+  <!-- Seaweed 1 -->
+  <div class="weed" style="left:1%">
+    <span class="stem s1"></span>
+    <span class="stem s2"></span>
+    <span class="stem s3"></span>
+    <span class="stem s4"></span>
+    <span class="leaf l1"></span>
+    <span class="leaf l2"></span>
+    <span class="leaf l3"></span>
+    <span class="leaf l4"></span>
+    <span class="leaf l5"></span>
+    <span class="leaf l6"></span>
     <span class="leaf l7"></span>
   </div>
 
-  <div class="weed-cluster" style="left:12%">
-    <span class="stem s1"></span><span class="stem s2"></span>
-    <span class="stem s3"></span><span class="stem s4"></span>
-    <span class="leaf l1"></span><span class="leaf l2"></span>
-    <span class="leaf l3"></span><span class="leaf l4"></span>
-    <span class="leaf l5"></span><span class="leaf l6"></span>
+  <!-- Seaweed 2 -->
+  <div class="weed" style="left:15%;transform:scale(.75)">
+    <span class="stem s1"></span>
+    <span class="stem s2"></span>
+    <span class="stem s3"></span>
+    <span class="stem s4"></span>
+    <span class="leaf l1"></span>
+    <span class="leaf l2"></span>
+    <span class="leaf l3"></span>
+    <span class="leaf l4"></span>
+    <span class="leaf l5"></span>
+    <span class="leaf l6"></span>
     <span class="leaf l7"></span>
   </div>
 
-  <div class="weed-cluster slow" style="left:31%;transform:scale(.8)">
-    <span class="stem s1"></span><span class="stem s2"></span>
-    <span class="stem s3"></span><span class="stem s4"></span>
-    <span class="leaf l1"></span><span class="leaf l2"></span>
-    <span class="leaf l3"></span><span class="leaf l4"></span>
-    <span class="leaf l5"></span><span class="leaf l6"></span>
+  <!-- Seaweed 3 -->
+  <div class="weed" style="left:30%">
+    <span class="stem s1"></span>
+    <span class="stem s2"></span>
+    <span class="stem s3"></span>
+    <span class="stem s4"></span>
+    <span class="leaf l1"></span>
+    <span class="leaf l2"></span>
+    <span class="leaf l3"></span>
+    <span class="leaf l4"></span>
+    <span class="leaf l5"></span>
+    <span class="leaf l6"></span>
     <span class="leaf l7"></span>
   </div>
 
-  <div class="weed-cluster fast" style="left:46%;transform:scale(.95)">
-    <span class="stem s1"></span><span class="stem s2"></span>
-    <span class="stem s3"></span><span class="stem s4"></span>
-    <span class="leaf l1"></span><span class="leaf l2"></span>
-    <span class="leaf l3"></span><span class="leaf l4"></span>
-    <span class="leaf l5"></span><span class="leaf l6"></span>
+  <!-- Seaweed 4 -->
+  <div class="weed" style="left:48%;transform:scale(.85)">
+    <span class="stem s1"></span>
+    <span class="stem s2"></span>
+    <span class="stem s3"></span>
+    <span class="stem s4"></span>
+    <span class="leaf l1"></span>
+    <span class="leaf l2"></span>
+    <span class="leaf l3"></span>
+    <span class="leaf l4"></span>
+    <span class="leaf l5"></span>
+    <span class="leaf l6"></span>
     <span class="leaf l7"></span>
   </div>
 
-  <div class="weed-cluster slow" style="left:64%">
-    <span class="stem s1"></span><span class="stem s2"></span>
-    <span class="stem s3"></span><span class="stem s4"></span>
-    <span class="leaf l1"></span><span class="leaf l2"></span>
-    <span class="leaf l3"></span><span class="leaf l4"></span>
-    <span class="leaf l5"></span><span class="leaf l6"></span>
+  <!-- Seaweed 5 -->
+  <div class="weed" style="left:65%">
+    <span class="stem s1"></span>
+    <span class="stem s2"></span>
+    <span class="stem s3"></span>
+    <span class="stem s4"></span>
+    <span class="leaf l1"></span>
+    <span class="leaf l2"></span>
+    <span class="leaf l3"></span>
+    <span class="leaf l4"></span>
+    <span class="leaf l5"></span>
+    <span class="leaf l6"></span>
     <span class="leaf l7"></span>
   </div>
 
-  <div class="weed-cluster fast" style="left:80%;transform:scale(.85)">
-    <span class="stem s1"></span><span class="stem s2"></span>
-    <span class="stem s3"></span><span class="stem s4"></span>
-    <span class="leaf l1"></span><span class="leaf l2"></span>
-    <span class="leaf l3"></span><span class="leaf l4"></span>
-    <span class="leaf l5"></span><span class="leaf l6"></span>
+  <!-- Seaweed 6 -->
+  <div class="weed" style="left:82%;transform:scale(.8)">
+    <span class="stem s1"></span>
+    <span class="stem s2"></span>
+    <span class="stem s3"></span>
+    <span class="stem s4"></span>
+    <span class="leaf l1"></span>
+    <span class="leaf l2"></span>
+    <span class="leaf l3"></span>
+    <span class="leaf l4"></span>
+    <span class="leaf l5"></span>
+    <span class="leaf l6"></span>
     <span class="leaf l7"></span>
   </div>
 
-  <div class="weed-cluster weed-far slow" style="left:94%">
-    <span class="stem s1"></span><span class="stem s2"></span>
-    <span class="stem s3"></span><span class="stem s4"></span>
-    <span class="leaf l1"></span><span class="leaf l2"></span>
-    <span class="leaf l3"></span><span class="leaf l4"></span>
-    <span class="leaf l5"></span><span class="leaf l6"></span>
-    <span class="leaf l7"></span>
-  </div>
-
-  <!-- Giant top-view whale -->
+  <!-- Big Whale -->
   <div class="whale">
     <div class="whale-body"></div>
     <div class="whale-head"></div>
@@ -738,7 +1044,7 @@ footer{
     <div class="whale-eye"></div>
   </div>
 
-  <!-- Divers catching fish -->
+  <!-- Divers -->
   <div class="diver one">
     <div class="diver-person">🤿</div>
     <div class="net"></div>
@@ -749,288 +1055,666 @@ footer{
     <div class="net"></div>
   </div>
 
-  <!-- Free fish -->
-  <div class="free-fish" style="top:28%;animation-duration:16s;animation-delay:-4s">🐟</div>
-  <div class="free-fish" style="top:42%;animation-duration:20s;animation-delay:-10s">🐠</div>
-  <div class="free-fish" style="top:63%;animation-duration:17s;animation-delay:-7s">🐟</div>
-  <div class="free-fish" style="top:78%;animation-duration:22s;animation-delay:-14s">🐠</div>
-  <div class="free-fish" style="top:35%;animation-duration:19s;animation-delay:-2s">🐡</div>
+  <!-- Fish -->
+  <div class="free-fish"
+       style="top:25%;animation-duration:16s;animation-delay:-4s">
+    🐟
+  </div>
 
-  <!-- Bubbles -->
-  <div class="bubble" style="left:8%;width:10px;height:10px;animation-duration:8s"></div>
-  <div class="bubble" style="left:15%;width:6px;height:6px;animation-duration:11s"></div>
-  <div class="bubble" style="left:25%;width:13px;height:13px;animation-duration:9s"></div>
-  <div class="bubble" style="left:40%;width:8px;height:8px;animation-duration:12s"></div>
-  <div class="bubble" style="left:56%;width:11px;height:11px;animation-duration:10s"></div>
-  <div class="bubble" style="left:72%;width:7px;height:7px;animation-duration:13s"></div>
-  <div class="bubble" style="left:87%;width:12px;height:12px;animation-duration:9s"></div>
+  <div class="free-fish"
+       style="top:40%;animation-duration:20s;animation-delay:-10s">
+    🐠
+  </div>
+
+  <div class="free-fish"
+       style="top:57%;animation-duration:17s;animation-delay:-7s">
+    🐟
+  </div>
+
+  <div class="free-fish"
+       style="top:73%;animation-duration:22s;animation-delay:-14s">
+    🐠
+  </div>
+
+  <div class="free-fish"
+       style="top:34%;animation-duration:19s;animation-delay:-2s">
+    🐡
+  </div>
 
 </div>
+
 
 <!-- =========================
      HEADER
 ========================= -->
+
 <header>
+
   <div class="topbar">
 
-    <div class="logo-text">KSA PANEL</div>
+    <div class="brand">
+      KSA PANEL
+    </div>
 
     <div class="lang-switch">
-      <button onclick="setLanguage('bn')">বাংলা</button>
-      <button onclick="setLanguage('en')">English</button>
+      <button onclick="setLanguage('bn')">
+        বাংলা
+      </button>
+
+      <button onclick="setLanguage('en')">
+        English
+      </button>
     </div>
 
   </div>
 
-  <!-- Fish make KSA PANEL -->
+  <!-- CLEAR TITLE -->
   <div class="logo-area">
-    <canvas id="fishLogo"></canvas>
+
+    <div class="ksa-title">
+      KSA PANEL
+    </div>
+
+    <!-- Particles -->
+    <span class="particle" style="left:10%;top:35%;animation-delay:-1s"></span>
+    <span class="particle" style="left:18%;top:65%;animation-delay:-2s"></span>
+    <span class="particle" style="left:27%;top:25%;animation-delay:-3s"></span>
+    <span class="particle" style="left:38%;top:70%;animation-delay:-1.5s"></span>
+    <span class="particle" style="left:52%;top:25%;animation-delay:-2.5s"></span>
+    <span class="particle" style="left:63%;top:70%;animation-delay:-3.5s"></span>
+    <span class="particle" style="left:75%;top:30%;animation-delay:-1.8s"></span>
+    <span class="particle" style="left:87%;top:62%;animation-delay:-2.8s"></span>
+
   </div>
+
 </header>
+
+
+<!-- =========================
+     MAIN
+========================= -->
 
 <main>
 
-  <div class="notice"
-       data-bn="পছন্দের সার্ভিস নির্বাচন করে অর্ডার করুন।"
-       data-en="Select your preferred service and place your order.">
-    পছন্দের সার্ভিস নির্বাচন করে অর্ডার করুন।
+  <div class="notice">
+
+    <span
+      data-bn="পছন্দের সার্ভিস নির্বাচন করে অর্ডার করুন।"
+      data-en="Select your preferred service and place your order.">
+      পছন্দের সার্ভিস নির্বাচন করে অর্ডার করুন।
+    </span>
+
     <br>
-    <a class="telegram" href="https://t.me/ksapanel473" target="_blank">
+
+    <a
+      class="telegram"
+      href="https://t.me/ksapanel473"
+      target="_blank">
       Telegram: @ksapanel473
     </a>
+
   </div>
+
 
   <!-- Categories -->
+
   <div class="categories">
 
-    <button class="active" onclick="filterProducts('all')"
-      data-bn="সব" data-en="All">সব</button>
+    <button class="active"
+      onclick="filterProducts('all')"
+      data-bn="সব"
+      data-en="All">
+      সব
+    </button>
 
-    <button onclick="filterProducts('sensi')"
-      data-bn="সেনসি" data-en="Sensi">সেনসি</button>
+    <button
+      onclick="filterProducts('sensi')"
+      data-bn="সেনসি"
+      data-en="Sensi">
+      সেনসি
+    </button>
 
-    <button onclick="filterProducts('headshot')"
-      data-bn="ড্রাগ হেডশট" data-en="Drag Headshot">ড্রাগ হেডশট</button>
+    <button
+      onclick="filterProducts('headshot')"
+      data-bn="ড্রাগ হেডশট"
+      data-en="Drag Headshot">
+      ড্রাগ হেডশট
+    </button>
 
-    <button onclick="filterProducts('location')"
-      data-bn="লোকেশন" data-en="Location">লোকেশন</button>
+    <button
+      onclick="filterProducts('location')"
+      data-bn="লোকেশন"
+      data-en="Location">
+      লোকেশন
+    </button>
 
-    <button onclick="filterProducts('nonroot')"
-      data-bn="নন রুট" data-en="Non Root">নন রুট</button>
+    <button
+      onclick="filterProducts('nonroot')"
+      data-bn="নন রুট"
+      data-en="Non Root">
+      নন রুট
+    </button>
 
-    <button onclick="filterProducts('root')"
-      data-bn="রুট" data-en="Root">রুট</button>
+    <button
+      onclick="filterProducts('root')"
+      data-bn="রুট"
+      data-en="Root">
+      রুট
+    </button>
 
-    <button onclick="filterProducts('iphone')"
-      data-bn="আইফোন" data-en="iPhone">আইফোন</button>
+    <button
+      onclick="filterProducts('iphone')"
+      data-bn="আইফোন"
+      data-en="iPhone">
+      আইফোন
+    </button>
 
-    <button onclick="filterProducts('pc')"
-      data-bn="পিসি প্যানেল" data-en="PC Panel">পিসি প্যানেল</button>
+    <button
+      onclick="filterProducts('pc')"
+      data-bn="পিসি প্যানেল"
+      data-en="PC Panel">
+      পিসি প্যানেল
+    </button>
 
   </div>
+
 
   <!-- PRODUCTS -->
+
   <div class="products">
 
-    <!-- সেনসি -->
     <div class="product" data-cat="sensi">
-      <h3 data-bn="সেনসি" data-en="Sensi">সেনসি</h3>
+
+      <h3
+        data-bn="সেনসি"
+        data-en="Sensi">
+        সেনসি
+      </h3>
 
       <div class="package">
-        <span>১০০ টাকা / 100 BDT</span>
-        <button class="package-order"
-          onclick="goToPayment('সেনসি','Sensi','১০০ টাকা / 100 BDT')"
-          data-bn="অর্ডার করুন" data-en="Order Now">অর্ডার করুন</button>
+
+        <span>
+          ১০০ টাকা / 100 BDT
+        </span>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'সেনসি',
+            'Sensi',
+            '১০০ টাকা / 100 BDT'
+          )"
+          data-bn="অর্ডার করুন"
+          data-en="Order Now">
+          অর্ডার করুন
+        </button>
+
       </div>
+
     </div>
 
-    <!-- Headshot -->
+
     <div class="product" data-cat="headshot">
-      <h3 data-bn="ড্রাগ হেডশট" data-en="Drag Headshot">ড্রাগ হেডশট</h3>
+
+      <h3
+        data-bn="ড্রাগ হেডশট"
+        data-en="Drag Headshot">
+        ড্রাগ হেডশট
+      </h3>
 
       <div class="package">
-        <span>১৪৫ টাকা / 145 BDT</span>
-        <button class="package-order"
-          onclick="goToPayment('ড্রাগ হেডশট','Drag Headshot','১৪৫ টাকা / 145 BDT')"
-          data-bn="অর্ডার করুন" data-en="Order Now">অর্ডার করুন</button>
+
+        <span>
+          ১৪৫ টাকা / 145 BDT
+        </span>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'ড্রাগ হেডশট',
+            'Drag Headshot',
+            '১৪৫ টাকা / 145 BDT'
+          )"
+          data-bn="অর্ডার করুন"
+          data-en="Order Now">
+          অর্ডার করুন
+        </button>
+
       </div>
+
     </div>
 
-    <!-- Location -->
+
     <div class="product" data-cat="location">
-      <h3 data-bn="লোকেশন" data-en="Location">লোকেশন</h3>
+
+      <h3
+        data-bn="লোকেশন"
+        data-en="Location">
+        লোকেশন
+      </h3>
 
       <div class="package">
-        <span>৫০ টাকা / 50 BDT</span>
-        <button class="package-order"
-          onclick="goToPayment('লোকেশন','Location','৫০ টাকা / 50 BDT')"
-          data-bn="অর্ডার করুন" data-en="Order Now">অর্ডার করুন</button>
+
+        <span>
+          ৫০ টাকা / 50 BDT
+        </span>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'লোকেশন',
+            'Location',
+            '৫০ টাকা / 50 BDT'
+          )"
+          data-bn="অর্ডার করুন"
+          data-en="Order Now">
+          অর্ডার করুন
+        </button>
+
       </div>
+
     </div>
 
-    <!-- Non Root -->
+
+    <!-- NON ROOT -->
+
     <div class="product" data-cat="nonroot">
-      <h3 data-bn="নন রুট" data-en="Non Root">নন রুট</h3>
+
+      <h3
+        data-bn="নন রুট"
+        data-en="Non Root">
+        নন রুট
+      </h3>
 
       <div class="package">
-        <span data-bn="৩০ দিন — ৩০০ টাকা"
-              data-en="30 Days — 300 BDT">
+
+        <span
+          data-bn="৩০ দিন — ৩০০ টাকা"
+          data-en="30 Days — 300 BDT">
           ৩০ দিন — ৩০০ টাকা
         </span>
-        <button class="package-order"
-          onclick="goToPayment('নন রুট — ৩০ দিন','Non Root — 30 Days','৩০০ টাকা / 300 BDT')"
-          data-bn="অর্ডার" data-en="Order">অর্ডার</button>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'নন রুট — ৩০ দিন',
+            'Non Root — 30 Days',
+            '৩০০ টাকা / 300 BDT'
+          )"
+          data-bn="অর্ডার"
+          data-en="Order">
+          অর্ডার
+        </button>
+
       </div>
 
+
       <div class="package">
-        <span data-bn="১ ওবিবি — ৭০০ টাকা"
-              data-en="1 OBB — 700 BDT">
+
+        <span
+          data-bn="১ ওবিবি — ৭০০ টাকা"
+          data-en="1 OBB — 700 BDT">
           ১ ওবিবি — ৭০০ টাকা
         </span>
-        <button class="package-order"
-          onclick="goToPayment('নন রুট — ১ ওবিবি','Non Root — 1 OBB','৭০০ টাকা / 700 BDT')"
-          data-bn="অর্ডার" data-en="Order">অর্ডার</button>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'নন রুট — ১ ওবিবি',
+            'Non Root — 1 OBB',
+            '৭০০ টাকা / 700 BDT'
+          )"
+          data-bn="অর্ডার"
+          data-en="Order">
+          অর্ডার
+        </button>
+
       </div>
 
+
       <div class="package">
-        <span data-bn="পারমানেন্ট — ১৪০০ টাকা"
-              data-en="Permanent — 1400 BDT">
+
+        <span
+          data-bn="পারমানেন্ট — ১৪০০ টাকা"
+          data-en="Permanent — 1400 BDT">
           পারমানেন্ট — ১৪০০ টাকা
         </span>
-        <button class="package-order"
-          onclick="goToPayment('নন রুট — পারমানেন্ট','Non Root — Permanent','১৪০০ টাকা / 1400 BDT')"
-          data-bn="অর্ডার" data-en="Order">অর্ডার</button>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'নন রুট — পারমানেন্ট',
+            'Non Root — Permanent',
+            '১৪০০ টাকা / 1400 BDT'
+          )"
+          data-bn="অর্ডার"
+          data-en="Order">
+          অর্ডার
+        </button>
+
       </div>
+
     </div>
 
-    <!-- Root -->
+
+    <!-- ROOT -->
+
     <div class="product" data-cat="root">
-      <h3 data-bn="রুট" data-en="Root">রুট</h3>
+
+      <h3
+        data-bn="রুট"
+        data-en="Root">
+        রুট
+      </h3>
 
       <div class="package">
-        <span data-bn="৩০ দিন — ৪৫০ টাকা"
-              data-en="30 Days — 450 BDT">
+
+        <span
+          data-bn="৩০ দিন — ৪৫০ টাকা"
+          data-en="30 Days — 450 BDT">
           ৩০ দিন — ৪৫০ টাকা
         </span>
-        <button class="package-order"
-          onclick="goToPayment('রুট — ৩০ দিন','Root — 30 Days','৪৫০ টাকা / 450 BDT')"
-          data-bn="অর্ডার" data-en="Order">অর্ডার</button>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'রুট — ৩০ দিন',
+            'Root — 30 Days',
+            '৪৫০ টাকা / 450 BDT'
+          )"
+          data-bn="অর্ডার"
+          data-en="Order">
+          অর্ডার
+        </button>
+
       </div>
 
+
       <div class="package">
-        <span data-bn="১ ওবিবি — ৯৭০ টাকা"
-              data-en="1 OBB — 970 BDT">
+
+        <span
+          data-bn="১ ওবিবি — ৯৭০ টাকা"
+          data-en="1 OBB — 970 BDT">
           ১ ওবিবি — ৯৭০ টাকা
         </span>
-        <button class="package-order"
-          onclick="goToPayment('রুট — ১ ওবিবি','Root — 1 OBB','৯৭০ টাকা / 970 BDT')"
-          data-bn="অর্ডার" data-en="Order">অর্ডার</button>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'রুট — ১ ওবিবি',
+            'Root — 1 OBB',
+            '৯৭০ টাকা / 970 BDT'
+          )"
+          data-bn="অর্ডার"
+          data-en="Order">
+          অর্ডার
+        </button>
+
       </div>
 
+
       <div class="package">
-        <span data-bn="পারমানেন্ট — ৩৩০০ টাকা"
-              data-en="Permanent — 3300 BDT">
+
+        <span
+          data-bn="পারমানেন্ট — ৩৩০০ টাকা"
+          data-en="Permanent — 3300 BDT">
           পারমানেন্ট — ৩৩০০ টাকা
         </span>
-        <button class="package-order"
-          onclick="goToPayment('রুট — পারমানেন্ট','Root — Permanent','৩৩০০ টাকা / 3300 BDT')"
-          data-bn="অর্ডার" data-en="Order">অর্ডার</button>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'রুট — পারমানেন্ট',
+            'Root — Permanent',
+            '৩৩০০ টাকা / 3300 BDT'
+          )"
+          data-bn="অর্ডার"
+          data-en="Order">
+          অর্ডার
+        </button>
+
       </div>
+
     </div>
 
-    <!-- iPhone -->
+
+    <!-- IPHONE -->
+
     <div class="product" data-cat="iphone">
-      <h3 data-bn="আইফোন" data-en="iPhone">আইফোন</h3>
+
+      <h3
+        data-bn="আইফোন"
+        data-en="iPhone">
+        আইফোন
+      </h3>
 
       <div class="package">
-        <span data-bn="৩০ দিন — ৪০০ টাকা"
-              data-en="30 Days — 400 BDT">
+
+        <span
+          data-bn="৩০ দিন — ৪০০ টাকা"
+          data-en="30 Days — 400 BDT">
           ৩০ দিন — ৪০০ টাকা
         </span>
-        <button class="package-order"
-          onclick="goToPayment('আইফোন — ৩০ দিন','iPhone — 30 Days','৪০০ টাকা / 400 BDT')"
-          data-bn="অর্ডার" data-en="Order">অর্ডার</button>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'আইফোন — ৩০ দিন',
+            'iPhone — 30 Days',
+            '৪০০ টাকা / 400 BDT'
+          )"
+          data-bn="অর্ডার"
+          data-en="Order">
+          অর্ডার
+        </button>
+
       </div>
 
+
       <div class="package">
-        <span data-bn="১ ওবিবি — ৭০০ টাকা"
-              data-en="1 OBB — 700 BDT">
+
+        <span
+          data-bn="১ ওবিবি — ৭০০ টাকা"
+          data-en="1 OBB — 700 BDT">
           ১ ওবিবি — ৭০০ টাকা
         </span>
-        <button class="package-order"
-          onclick="goToPayment('আইফোন — ১ ওবিবি','iPhone — 1 OBB','৭০০ টাকা / 700 BDT')"
-          data-bn="অর্ডার" data-en="Order">অর্ডার</button>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'আইফোন — ১ ওবিবি',
+            'iPhone — 1 OBB',
+            '৭০০ টাকা / 700 BDT'
+          )"
+          data-bn="অর্ডার"
+          data-en="Order">
+          অর্ডার
+        </button>
+
       </div>
 
+
       <div class="package">
-        <span data-bn="পারমানেন্ট — ৪৫৭০ টাকা"
-              data-en="Permanent — 4570 BDT">
+
+        <span
+          data-bn="পারমানেন্ট — ৪৫৭০ টাকা"
+          data-en="Permanent — 4570 BDT">
           পারমানেন্ট — ৪৫৭০ টাকা
         </span>
-        <button class="package-order"
-          onclick="goToPayment('আইফোন — পারমানেন্ট','iPhone — Permanent','৪৫৭০ টাকা / 4570 BDT')"
-          data-bn="অর্ডার" data-en="Order">অর্ডার</button>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'আইফোন — পারমানেন্ট',
+            'iPhone — Permanent',
+            '৪৫৭০ টাকা / 4570 BDT'
+          )"
+          data-bn="অর্ডার"
+          data-en="Order">
+          অর্ডার
+        </button>
+
       </div>
+
     </div>
 
-    <!-- PC -->
+
+    <!-- PC PANEL -->
+
     <div class="product" data-cat="pc">
-      <h3 data-bn="পিসি প্যানেল" data-en="PC Panel">পিসি প্যানেল</h3>
+
+      <h3
+        data-bn="পিসি প্যানেল"
+        data-en="PC Panel">
+        পিসি প্যানেল
+      </h3>
 
       <div class="package">
-        <span data-bn="৩০ দিন — ৬০০ টাকা"
-              data-en="30 Days — 600 BDT">
+
+        <span
+          data-bn="৩০ দিন — ৬০০ টাকা"
+          data-en="30 Days — 600 BDT">
           ৩০ দিন — ৬০০ টাকা
         </span>
-        <button class="package-order"
-          onclick="goToPayment('পিসি প্যানেল — ৩০ দিন','PC Panel — 30 Days','৬০০ টাকা / 600 BDT')"
-          data-bn="অর্ডার" data-en="Order">অর্ডার</button>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'পিসি প্যানেল — ৩০ দিন',
+            'PC Panel — 30 Days',
+            '৬০০ টাকা / 600 BDT'
+          )"
+          data-bn="অর্ডার"
+          data-en="Order">
+          অর্ডার
+        </button>
+
       </div>
 
+
       <div class="package">
-        <span data-bn="১ ওবিবি — ১১৮০ টাকা"
-              data-en="1 OBB — 1180 BDT">
+
+        <span
+          data-bn="১ ওবিবি — ১১৮০ টাকা"
+          data-en="1 OBB — 1180 BDT">
           ১ ওবিবি — ১১৮০ টাকা
         </span>
-        <button class="package-order"
-          onclick="goToPayment('পিসি প্যানেল — ১ ওবিবি','PC Panel — 1 OBB','১১৮০ টাকা / 1180 BDT')"
-          data-bn="অর্ডার" data-en="Order">অর্ডার</button>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'পিসি প্যানেল — ১ ওবিবি',
+            'PC Panel — 1 OBB',
+            '১১৮০ টাকা / 1180 BDT'
+          )"
+          data-bn="অর্ডার"
+          data-en="Order">
+          অর্ডার
+        </button>
+
       </div>
 
+
       <div class="package">
-        <span data-bn="পারমানেন্ট — ২৩০০ টাকা"
-              data-en="Permanent — 2300 BDT">
+
+        <span
+          data-bn="পারমানেন্ট — ২৩০০ টাকা"
+          data-en="Permanent — 2300 BDT">
           পারমানেন্ট — ২৩০০ টাকা
         </span>
-        <button class="package-order"
-          onclick="goToPayment('পিসি প্যানেল — পারমানেন্ট','PC Panel — Permanent','২৩০০ টাকা / 2300 BDT')"
-          data-bn="অর্ডার" data-en="Order">অর্ডার</button>
+
+        <button
+          class="package-order"
+          onclick="goToPayment(
+            'পিসি প্যানেল — পারমানেন্ট',
+            'PC Panel — Permanent',
+            '২৩০০ টাকা / 2300 BDT'
+          )"
+          data-bn="অর্ডার"
+          data-en="Order">
+          অর্ডার
+        </button>
+
       </div>
+
     </div>
 
   </div>
+
+
+  <!-- =========================
+       MASKED NUMBERS
+  ========================= -->
+
+  <div class="numbers-section">
+
+    <h2
+      data-bn="সাম্প্রতিক নম্বর"
+      data-en="Recent Numbers">
+      সাম্প্রতিক নম্বর
+    </h2>
+
+    <div class="number-list">
+
+      <div class="masked-number">
+        016****925
+      </div>
+
+      <div class="masked-number">
+        018****314
+      </div>
+
+      <div class="masked-number">
+        017****681
+      </div>
+
+      <div class="masked-number">
+        019****472
+      </div>
+
+      <div class="masked-number">
+        013****806
+      </div>
+
+      <div class="masked-number">
+        015****239
+      </div>
+
+    </div>
+
+  </div>
+
 
   <!-- =========================
        PAYMENT
   ========================= -->
+
   <div class="section" id="payment">
 
-    <h2 data-bn="বিকাশ পেমেন্ট"
-        data-en="bKash Payment">
+    <h2
+      data-bn="বিকাশ পেমেন্ট"
+      data-en="bKash Payment">
       বিকাশ পেমেন্ট
     </h2>
 
-    <div class="bkash">বিকাশ</div>
-
-    <div class="bkash-number">01832137297</div>
-
-    <div class="selected-order" id="selectedOrder"
-         data-bn="অর্ডার করার পর আপনার তথ্য এখানে দেখাবে।"
-         data-en="Your selected order will appear here.">
-      অর্ডার করার পর আপনার তথ্য এখানে দেখাবে।
+    <div class="bkash">
+      বিকাশ
     </div>
 
-    <label class="payment-label"
+    <div class="bkash-number">
+      01832137297
+    </div>
+
+    <div
+      class="selected-order"
+      id="selectedOrder"
+      data-bn="অর্ডার করার পর আপনার নির্বাচিত প্যাকেজ এখানে দেখাবে।"
+      data-en="Your selected package will appear here.">
+      অর্ডার করার পর আপনার নির্বাচিত প্যাকেজ এখানে দেখাবে।
+    </div>
+
+    <label
+      class="payment-label"
       data-bn="আপনার ট্রানজেকশন আইডি দিন অথবা পুরো নাম্বার দিন"
       data-en="Enter your transaction ID or full number">
       আপনার ট্রানজেকশন আইডি দিন অথবা পুরো নাম্বার দিন
@@ -1039,20 +1723,22 @@ footer{
     <input
       id="trx"
       type="text"
+      placeholder="আপনার ট্রানজেকশন আইডি অথবা পুরো নাম্বার লিখুন"
       data-placeholder-bn="আপনার ট্রানজেকশন আইডি অথবা পুরো নাম্বার লিখুন"
-      data-placeholder-en="Enter your transaction ID or full number"
-      placeholder="আপনার ট্রানজেকশন আইডি অথবা পুরো নাম্বার লিখুন">
+      data-placeholder-en="Enter your transaction ID or full number">
 
     <div class="payment-actions">
 
-      <button class="whatsapp"
+      <button
+        class="whatsapp"
         onclick="sendPayment('whatsapp')"
         data-bn="WhatsApp-এ জমা দিন"
         data-en="Submit via WhatsApp">
         WhatsApp-এ জমা দিন
       </button>
 
-      <button class="telegram-btn"
+      <button
+        class="telegram-btn"
         onclick="sendPayment('telegram')"
         data-bn="Telegram-এ জমা দিন"
         data-en="Submit via Telegram">
@@ -1065,15 +1751,20 @@ footer{
 
 </main>
 
+
 <footer>
-  <div data-bn="KSA PANEL — ধন্যবাদ"
-       data-en="KSA PANEL — Thank you">
+
+  <span
+    data-bn="KSA PANEL — ধন্যবাদ"
+    data-en="KSA PANEL — Thank you">
     KSA PANEL — ধন্যবাদ
-  </div>
+  </span>
+
 </footer>
 
 
 <script>
+
 /* =========================
    LANGUAGE
 ========================= */
@@ -1082,58 +1773,80 @@ let currentLanguage =
   localStorage.getItem("ksaLanguage") || "bn";
 
 let selectedOrder = {
-  bn:"অর্ডার করার পর আপনার তথ্য এখানে দেখাবে।",
-  en:"Your selected order will appear here."
+  bn:"অর্ডার করার পর আপনার নির্বাচিত প্যাকেজ এখানে দেখাবে।",
+  en:"Your selected package will appear here."
 };
 
 function setLanguage(lang){
 
-  currentLanguage = lang;
+  currentLanguage=lang;
 
-  localStorage.setItem("ksaLanguage",lang);
+  localStorage.setItem(
+    "ksaLanguage",
+    lang
+  );
 
-  document.querySelectorAll("[data-bn]").forEach(el=>{
-    el.textContent =
-      lang === "bn"
+  document
+    .querySelectorAll("[data-bn]")
+    .forEach(el=>{
+
+      el.textContent =
+        lang==="bn"
         ? el.getAttribute("data-bn")
         : el.getAttribute("data-en");
-  });
 
-  document.querySelectorAll("[data-placeholder-bn]").forEach(el=>{
-    el.placeholder =
-      lang === "bn"
+    });
+
+  document
+    .querySelectorAll("[data-placeholder-bn]")
+    .forEach(el=>{
+
+      el.placeholder =
+        lang==="bn"
         ? el.getAttribute("data-placeholder-bn")
         : el.getAttribute("data-placeholder-en");
-  });
 
-  document.getElementById("selectedOrder").textContent =
+    });
+
+  document.getElementById(
+    "selectedOrder"
+  ).textContent =
     selectedOrder[lang];
 }
 
 
 /* =========================
-   CATEGORY FILTER
+   FILTER
 ========================= */
 
 function filterProducts(category){
 
-  document.querySelectorAll(".categories button")
-    .forEach(btn=>btn.classList.remove("active"));
+  document
+    .querySelectorAll(".categories button")
+    .forEach(btn=>{
+      btn.classList.remove("active");
+    });
 
   event.target.classList.add("active");
 
-  document.querySelectorAll(".product").forEach(card=>{
+  document
+    .querySelectorAll(".product")
+    .forEach(card=>{
 
-    if(category === "all"){
-      card.style.display = "";
-    }else{
-      card.style.display =
-        card.dataset.cat === category
-        ? ""
-        : "none";
-    }
+      if(category==="all"){
 
-  });
+        card.style.display="";
+
+      }else{
+
+        card.style.display =
+          card.dataset.cat===category
+          ? ""
+          : "none";
+
+      }
+
+    });
 }
 
 
@@ -1141,69 +1854,89 @@ function filterProducts(category){
    ORDER -> PAYMENT
 ========================= */
 
-function goToPayment(bn,en,price){
+function goToPayment(
+  bn,
+  en,
+  price
+){
 
   selectedOrder.bn =
-    "নির্বাচিত: " + bn + " — " + price;
+    "নির্বাচিত: "
+    +bn
+    +" — "
+    +price;
 
   selectedOrder.en =
-    "Selected: " + en + " — " + price;
+    "Selected: "
+    +en
+    +" — "
+    +price;
 
-  document.getElementById("selectedOrder").textContent =
+  document.getElementById(
+    "selectedOrder"
+  ).textContent =
     selectedOrder[currentLanguage];
 
-  const payment =
-    document.getElementById("payment");
-
-  payment.scrollIntoView({
-    behavior:"smooth",
-    block:"start"
-  });
+  document
+    .getElementById("payment")
+    .scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
 
   setTimeout(()=>{
-    document.getElementById("trx").focus();
+    document
+      .getElementById("trx")
+      .focus();
   },700);
 }
 
 
 /* =========================
-   SEND PAYMENT
+   PAYMENT
 ========================= */
 
 function sendPayment(type){
 
   const value =
-    document.getElementById("trx").value.trim();
+    document
+      .getElementById("trx")
+      .value
+      .trim();
 
   if(!value){
 
     alert(
-      currentLanguage === "bn"
-        ? "দয়া করে ট্রানজেকশন আইডি অথবা পুরো নাম্বার দিন।"
-        : "Please enter your transaction ID or full number."
+      currentLanguage==="bn"
+      ? "দয়া করে ট্রানজেকশন আইডি অথবা পুরো নাম্বার দিন।"
+      : "Please enter your transaction ID or full number."
     );
 
-    document.getElementById("trx").focus();
+    document
+      .getElementById("trx")
+      .focus();
 
     return;
   }
 
   const message =
-    currentLanguage === "bn"
-      ? "KSA PANEL অর্ডার\n\n"
-        + selectedOrder.bn
-        + "\n\nট্রানজেকশন আইডি / নাম্বার: "
-        + value
-      : "KSA PANEL Order\n\n"
-        + selectedOrder.en
-        + "\n\nTransaction ID / Number: "
-        + value;
+    currentLanguage==="bn"
+    ?
+      "KSA PANEL অর্ডার\n\n"
+      +selectedOrder.bn
+      +"\n\nট্রানজেকশন আইডি / নাম্বার: "
+      +value
+    :
+      "KSA PANEL Order\n\n"
+      +selectedOrder.en
+      +"\n\nTransaction ID / Number: "
+      +value;
 
-  if(type === "whatsapp"){
+  if(type==="whatsapp"){
 
     window.open(
       "https://wa.me/8801832137297?text="
-      + encodeURIComponent(message),
+      +encodeURIComponent(message),
       "_blank"
     );
 
@@ -1211,262 +1944,17 @@ function sendPayment(type){
 
     window.open(
       "https://t.me/ksapanel473?text="
-      + encodeURIComponent(message),
+      +encodeURIComponent(message),
       "_blank"
     );
 
   }
+
 }
 
 
 /* =========================
-   FISH LOGO
-========================= */
-
-const canvas =
-  document.getElementById("fishLogo");
-
-const ctx =
-  canvas.getContext("2d");
-
-let fish = [];
-let points = [];
-let logoState = 0;
-let lastSwitch = performance.now();
-
-const fishSymbols = ["🐟","🐠","🐡"];
-
-function resizeCanvas(){
-
-  const rect =
-    canvas.getBoundingClientRect();
-
-  canvas.width =
-    rect.width * devicePixelRatio;
-
-  canvas.height =
-    rect.height * devicePixelRatio;
-
-  ctx.setTransform(
-    devicePixelRatio,0,0,
-    devicePixelRatio,0,0
-  );
-
-  createLogoPoints();
-}
-
-function createLogoPoints(){
-
-  const w = canvas.clientWidth;
-  const h = canvas.clientHeight;
-
-  const temp =
-    document.createElement("canvas");
-
-  temp.width = 900;
-  temp.height = 280;
-
-  const tctx =
-    temp.getContext("2d");
-
-  tctx.fillStyle="white";
-  tctx.font="900 115px Arial";
-  tctx.textAlign="center";
-  tctx.textBaseline="middle";
-
-  tctx.fillText(
-    "KSA PANEL",
-    450,
-    140
-  );
-
-  const data =
-    tctx.getImageData(
-      0,0,900,280
-    ).data;
-
-  points=[];
-
-  for(let y=0;y<280;y+=7){
-
-    for(let x=0;x<900;x+=7){
-
-      const i=(y*900+x)*4;
-
-      if(data[i]>120){
-
-        points.push({
-          x:x/900*w,
-          y:y/280*h
-        });
-
-      }
-
-    }
-  }
-
-  points =
-    points.sort(()=>Math.random()-.5);
-
-  if(fish.length===0){
-
-    for(let i=0;i<Math.max(260,points.length);i++){
-
-      fish.push({
-        x:Math.random()*w,
-        y:Math.random()*h,
-        tx:Math.random()*w,
-        ty:Math.random()*h,
-        speed:.012+Math.random()*.018,
-        symbol:
-          fishSymbols[
-            Math.floor(
-              Math.random()*fishSymbols.length
-            )
-          ],
-        group:i%2
-      });
-
-    }
-
-  }
-}
-
-function randomTarget(){
-
-  return {
-    x:Math.random()*canvas.clientWidth,
-    y:Math.random()*canvas.clientHeight
-  };
-
-}
-
-function assignText(group){
-
-  let n=0;
-
-  for(let i=0;i<fish.length;i++){
-
-    if(fish[i].group===group){
-
-      const p =
-        points[n % points.length];
-
-      fish[i].tx=p.x;
-      fish[i].ty=p.y;
-
-      n++;
-    }
-  }
-}
-
-function scatter(group){
-
-  for(const f of fish){
-
-    if(f.group===group){
-
-      const p=randomTarget();
-
-      f.tx=p.x;
-      f.ty=p.y;
-
-    }
-
-  }
-}
-
-function drawFish(f){
-
-  ctx.font="16px Arial";
-
-  ctx.globalAlpha=.92;
-
-  ctx.fillText(
-    f.symbol,
-    f.x,
-    f.y
-  );
-
-  ctx.globalAlpha=1;
-}
-
-function animateLogo(now){
-
-  const elapsed =
-    now-lastSwitch;
-
-  /*
-    0 = first group forms
-    1 = scatter first group
-    2 = second group forms
-    3 = scatter second group
-  */
-
-  if(elapsed>4200){
-
-    if(logoState===0){
-
-      scatter(0);
-      logoState=1;
-
-    }else if(logoState===1){
-
-      assignText(1);
-      logoState=2;
-
-    }else if(logoState===2){
-
-      scatter(1);
-      logoState=3;
-
-    }else{
-
-      assignText(0);
-      logoState=0;
-
-    }
-
-    lastSwitch=now;
-  }
-
-  ctx.clearRect(
-    0,0,
-    canvas.clientWidth,
-    canvas.clientHeight
-  );
-
-  for(const f of fish){
-
-    f.x +=
-      (f.tx-f.x)*f.speed;
-
-    f.y +=
-      (f.ty-f.y)*f.speed;
-
-    drawFish(f);
-
-  }
-
-  requestAnimationFrame(animateLogo);
-}
-
-window.addEventListener(
-  "resize",
-  resizeCanvas
-);
-
-resizeCanvas();
-
-assignText(0);
-
-requestAnimationFrame(
-  animateLogo
-);
-
-
-/* =========================
-   START LANGUAGE
+   START
 ========================= */
 
 setLanguage(currentLanguage);
