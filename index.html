@@ -6,1483 +6,1659 @@
 <title>KSA PANEL</title>
 
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{
-font-family:"Noto Sans Bengali","Segoe UI",sans-serif;
-background:#000;color:#fff;overflow-x:hidden;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-/* ===== সমুদ্র ===== */
+:root{
+  --bg1:#00101c;
+  --bg2:#003d59;
+  --accent:#00eaff;
+  --accent2:#0077ff;
+  --card:rgba(0,17,30,.78);
+  --weed:#087b58;
+  --text:#fff;
+  --muted:#b9dce5;
+}
+
+body{
+  min-height:100vh;
+  color:var(--text);
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+  background:
+    radial-gradient(circle at 50% 15%,rgba(0,234,255,.13),transparent 35%),
+    linear-gradient(180deg,var(--bg2),var(--bg1));
+  overflow-x:hidden;
+  transition:background 2s ease;
+}
+
+/* ================= OCEAN ================= */
+
 .ocean{
-position:fixed;
-inset:0;
-z-index:-5;
-overflow:hidden;
-background:
-radial-gradient(circle at 50% 15%,rgba(0,110,150,.28),transparent 28%),
-linear-gradient(#02070a 0%,#00141c 48%,#000 100%);
+  position:fixed;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
 }
 
 .water-light{
-position:absolute;
-inset:-20%;
-background:
-repeating-linear-gradient(
-100deg,
-transparent 0 80px,
-rgba(255,255,255,.025) 82px 86px,
-transparent 88px 170px
-);
-animation:waterMove 10s linear infinite;
+  position:absolute;
+  top:-20%;
+  left:25%;
+  width:50%;
+  height:100%;
+  background:linear-gradient(
+    180deg,
+    rgba(255,255,255,.12),
+    transparent 70%
+  );
+  filter:blur(30px);
+  transform:rotate(8deg);
+  animation:lightMove 8s ease-in-out infinite alternate;
 }
 
-@keyframes waterMove{
-to{transform:translateX(-180px)}
+@keyframes lightMove{
+  from{transform:translateX(-70px) rotate(8deg)}
+  to{transform:translateX(70px) rotate(8deg)}
 }
 
-/* ===== শেওলা ===== */
-.seaweed-layer{
-position:absolute;
-left:0;
-right:0;
-bottom:0;
-height:32%;
+/* bubbles */
+
+.bubble{
+  position:absolute;
+  bottom:-40px;
+  border:1px solid rgba(255,255,255,.55);
+  border-radius:50%;
+  animation:bubbleUp linear infinite;
+  opacity:.6;
 }
+
+@keyframes bubbleUp{
+  0%{
+    transform:translateY(0);
+    opacity:0;
+  }
+  15%{opacity:.65}
+  100%{
+    transform:translateY(-115vh) translateX(40px);
+    opacity:0;
+  }
+}
+
+/* free fish */
+
+.free-fish{
+  position:absolute;
+  font-size:28px;
+  white-space:nowrap;
+  filter:drop-shadow(0 0 7px var(--accent));
+  opacity:.72;
+}
+
+.to-right{
+  left:-100px;
+  animation:swimRight linear infinite;
+}
+
+.to-left{
+  right:-100px;
+  transform:scaleX(-1);
+  animation:swimLeft linear infinite;
+}
+
+@keyframes swimRight{
+  from{transform:translateX(0)}
+  to{transform:translateX(calc(100vw + 220px))}
+}
+
+@keyframes swimLeft{
+  from{transform:translateX(0) scaleX(-1)}
+  to{transform:translateX(calc(-100vw - 220px)) scaleX(-1)}
+}
+
+/* seaweed */
 
 .weed{
-position:absolute;
-bottom:-15px;
-width:20px;
-height:190px;
-border-radius:100% 0 100% 0;
-background:linear-gradient(90deg,#063d20,#159447,#052d18);
-transform-origin:bottom;
-opacity:.85;
-animation:sway 3s ease-in-out infinite alternate;
+  position:absolute;
+  bottom:-20px;
+  width:17px;
+  height:150px;
+  border-radius:100% 0 100% 0;
+  background:linear-gradient(
+    90deg,
+    var(--weed),
+    #10a86e,
+    var(--weed)
+  );
+  transform-origin:bottom;
+  animation:weedMove 4s ease-in-out infinite alternate;
 }
 
 .weed:before,
 .weed:after{
-content:"";
-position:absolute;
-width:18px;
-height:120px;
-border-radius:100% 0 100% 0;
-background:inherit;
+  content:"";
+  position:absolute;
+  bottom:35px;
+  width:15px;
+  height:90px;
+  border-radius:100% 0 100% 0;
+  background:inherit;
 }
 
 .weed:before{
-left:-16px;
-top:55px;
-transform:rotate(-35deg);
+  left:-18px;
+  transform:rotate(-22deg);
 }
 
 .weed:after{
-right:-15px;
-top:15px;
-transform:rotate(35deg);
+  right:-18px;
+  transform:rotate(22deg);
 }
 
-@keyframes sway{
-to{transform:rotate(7deg)}
+@keyframes weedMove{
+  from{transform:rotate(-6deg)}
+  to{transform:rotate(7deg)}
 }
 
-/* ===== বাবল ===== */
-.bubble{
-position:absolute;
-bottom:-30px;
-border:2px solid rgba(255,255,255,.35);
-border-radius:50%;
-background:rgba(255,255,255,.04);
-animation:bubbleUp linear infinite;
-}
+/* ================= MAIN ================= */
 
-@keyframes bubbleUp{
-from{
-transform:translateY(0) scale(.8);
-opacity:0;
-}
-15%{opacity:.65}
-to{
-transform:translateY(-115vh) scale(1.25);
-opacity:0;
-}
-}
-
-/* ===== মাছ ===== */
-.fish{
-position:absolute;
-font-size:clamp(24px,4vw,50px);
-filter:drop-shadow(0 0 8px rgba(0,180,255,.35));
-white-space:nowrap;
-animation-timing-function:linear;
-animation-iteration-count:infinite;
-}
-
-.right{animation-name:swimRight}
-.left{animation-name:swimLeft}
-
-@keyframes swimRight{
-0%{
-transform:translateX(-15vw) translateY(0) scaleX(1);
-}
-48%{
-transform:translateX(110vw) translateY(-30px) scaleX(1);
-}
-49%{
-transform:translateX(110vw) translateY(-30px) scaleX(-1);
-}
-100%{
-transform:translateX(-15vw) translateY(0) scaleX(-1);
-}
-}
-
-@keyframes swimLeft{
-0%{
-transform:translateX(115vw) translateY(0) scaleX(-1);
-}
-48%{
-transform:translateX(-15vw) translateY(30px) scaleX(-1);
-}
-49%{
-transform:translateX(-15vw) translateY(30px) scaleX(1);
-}
-100%{
-transform:translateX(115vw) translateY(0) scaleX(1);
-}
-}
-
-/* ===== KSA PANEL মাছের ঝাঁক ===== */
-.formation{
-min-height:380px;
-display:flex;
-align-items:center;
-justify-content:center;
-position:relative;
-overflow:hidden;
-border-bottom:2px solid #d00;
-}
-
-.formation-title{
-position:relative;
-z-index:4;
-font-size:clamp(42px,10vw,100px);
-font-weight:1000;
-letter-spacing:clamp(4px,1.4vw,15px);
-color:#e50914;
-text-shadow:
-0 0 12px #f00,
-0 0 35px rgba(255,0,0,.55);
-animation:titleReveal 2.4s ease-out both;
-}
-
-@keyframes titleReveal{
-0%{
-opacity:0;
-transform:scale(.15);
-filter:blur(15px);
-}
-55%{
-opacity:.25;
-transform:scale(1.12);
-filter:blur(3px);
-}
-100%{
-opacity:1;
-transform:scale(1);
-filter:blur(0);
-}
-}
-
-.school{
-position:absolute;
-inset:0;
-z-index:3;
-pointer-events:none;
-}
-
-.school span{
-position:absolute;
-font-size:28px;
-animation:schoolFish 3.2s ease-in-out infinite;
-}
-
-@keyframes schoolFish{
-0%{
-transform:translate(0,0) rotate(0deg);
-opacity:.2;
-}
-35%{opacity:1}
-70%{
-transform:
-translate(var(--tx),var(--ty))
-rotate(var(--r));
-opacity:1;
-}
-100%{
-transform:
-translate(var(--tx2),var(--ty2));
-opacity:0;
-}
-}
-
-/* ===== ওয়েবসাইট ===== */
 .container{
-width:min(1100px,94%);
-margin:auto;
+  position:relative;
+  z-index:5;
+  width:min(1100px,94%);
+  margin:auto;
+  padding-bottom:50px;
 }
+
+/* language */
+
+.lang-switch{
+  position:fixed;
+  top:12px;
+  right:12px;
+  z-index:50;
+  display:flex;
+  gap:4px;
+  padding:5px;
+  border-radius:30px;
+  background:rgba(0,10,20,.8);
+  border:1px solid var(--accent);
+  backdrop-filter:blur(8px);
+}
+
+.lang-switch button{
+  border:0;
+  padding:7px 12px;
+  border-radius:20px;
+  cursor:pointer;
+  background:transparent;
+  color:#fff;
+  font-weight:bold;
+}
+
+.lang-switch button.active{
+  background:var(--accent);
+  color:#00111c;
+}
+
+/* ================= FISH LOGO ================= */
+
+.logo-area{
+  height:310px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+#fishLogo{
+  width:min(900px,100%);
+  height:280px;
+  position:relative;
+}
+
+.logo-fish{
+  position:absolute;
+  left:0;
+  top:0;
+  font-size:22px;
+  line-height:1;
+  user-select:none;
+  pointer-events:none;
+  filter:drop-shadow(0 0 6px var(--accent));
+  will-change:transform;
+}
+
+/* ================= CONTENT ================= */
 
 .notice{
-background:#fff;
-color:#000;
-text-align:center;
-padding:10px;
-font-weight:800;
-border-bottom:3px solid #e50914;
+  text-align:center;
+  padding:14px;
+  margin-bottom:15px;
+  border:1px solid var(--accent);
+  border-radius:15px;
+  background:rgba(0,0,0,.35);
 }
 
-.telegram{
-text-align:center;
-padding:14px;
-background:#050505;
-border-bottom:1px solid #333;
-font-size:18px;
+.notice strong{
+  color:var(--accent);
 }
 
-.telegram a{
-color:#fff;
-text-decoration:none;
+.telegram-top{
+  display:block;
+  width:max-content;
+  max-width:100%;
+  margin:0 auto 22px;
+  padding:12px 20px;
+  border-radius:12px;
+  background:#0088cc;
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+  box-shadow:0 0 18px rgba(0,136,204,.4);
 }
 
-.telegram b{
-color:#e50914;
-}
+/* categories */
 
-/* ===== ক্যাটাগরি ===== */
 .categories{
-display:flex;
-gap:8px;
-overflow-x:auto;
-padding:16px 0;
-scrollbar-width:none;
-}
-
-.categories::-webkit-scrollbar{
-display:none;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:20px;
 }
 
 .categories button{
-flex:0 0 auto;
-background:#111;
-color:#fff;
-border:1px solid #e50914;
-border-radius:999px;
-padding:10px 18px;
-font-weight:800;
-cursor:pointer;
+  padding:9px 14px;
+  border-radius:25px;
+  border:1px solid var(--accent);
+  color:#fff;
+  background:rgba(0,0,0,.4);
+  cursor:pointer;
 }
 
 .categories button.active,
 .categories button:hover{
-background:#e50914;
+  background:var(--accent);
+  color:#00111c;
 }
 
-/* ===== প্রোডাক্ট ===== */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:16px;
-padding-bottom:20px;
+/* products */
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:15px;
 }
 
-.card{
-background:rgba(5,5,5,.9);
-border:1px solid #333;
-border-top:4px solid #e50914;
-border-radius:16px;
-padding:18px;
-box-shadow:0 10px 30px rgba(0,0,0,.4);
+.product{
+  padding:18px;
+  border-radius:18px;
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.13);
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  backdrop-filter:blur(7px);
+  transition:.3s;
 }
 
-.card h3{
-margin:0 0 8px;
-color:#fff;
+.product:hover{
+  transform:translateY(-5px);
+  border-color:var(--accent);
+  box-shadow:0 0 25px rgba(0,234,255,.2);
 }
 
-.card p{
-color:#bbb;
+.product h3{
+  color:var(--accent);
+  margin-bottom:13px;
 }
 
-.price{
-font-size:26px;
-font-weight:1000;
-color:#e50914;
+.package{
+  padding:9px;
+  margin:7px 0;
+  border-radius:9px;
+  background:rgba(255,255,255,.06);
 }
 
 .buy{
-width:100%;
-margin-top:12px;
-padding:12px;
-border:0;
-border-radius:10px;
-background:#e50914;
-color:#fff;
-font-size:16px;
-font-weight:900;
-cursor:pointer;
+  width:100%;
+  border:0;
+  padding:11px;
+  margin-top:8px;
+  border-radius:10px;
+  cursor:pointer;
+  background:var(--accent);
+  color:#00111c;
+  font-weight:bold;
 }
 
-.buy:hover{
-background:#fff;
-color:#000;
+/* section */
+
+.section{
+  margin-top:24px;
+  padding:20px;
+  border-radius:18px;
+  background:rgba(0,0,0,.38);
+  border:1px solid rgba(255,255,255,.12);
 }
 
-/* ===== পেমেন্ট ===== */
-.payment{
-margin:30px auto;
-padding:22px;
-max-width:600px;
-background:#070707;
-border:1px solid #333;
-border-radius:18px;
-text-align:center;
+.section h2{
+  color:var(--accent);
+  margin-bottom:15px;
 }
 
-.bkash-logo{
-width:130px;
-height:68px;
-margin:0 auto 12px;
-border-radius:12px;
-background:#e50914;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:27px;
-font-weight:1000;
+/* payment */
+
+.bkash{
+  display:inline-block;
+  padding:7px 14px;
+  border-radius:7px;
+  background:#e2133b;
+  font-weight:bold;
+  margin-bottom:8px;
 }
 
-.number{
-font-size:30px;
-font-weight:1000;
-letter-spacing:2px;
+.bkash-number{
+  font-size:22px;
+  font-weight:bold;
+  letter-spacing:2px;
+  margin-bottom:15px;
 }
 
-.payment input{
-width:100%;
-padding:14px;
-margin-top:14px;
-border-radius:10px;
-border:1px solid #555;
-background:#111;
-color:#fff;
-font-size:16px;
+input{
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:10px;
+  outline:none;
+  color:#fff;
+  background:rgba(0,0,0,.4);
 }
 
 .submit{
-margin-top:12px;
-width:100%;
-padding:13px;
-border:0;
-border-radius:10px;
-background:#fff;
-color:#000;
-font-weight:900;
-cursor:pointer;
+  width:100%;
+  padding:12px;
+  border:0;
+  border-radius:10px;
+  background:var(--accent);
+  color:#00111c;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-/* ===== অর্ডার ===== */
-.orders{
-margin:25px auto;
-max-width:700px;
-background:#070707;
-border:1px solid #333;
-border-radius:18px;
-padding:18px;
+/* contact */
+
+.contact-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
 
-.orders h2{
-margin-top:0;
-color:#e50914;
+.contact-buttons a{
+  text-decoration:none;
+  color:#fff;
+  text-align:center;
+  padding:13px;
+  border-radius:11px;
+  font-weight:bold;
 }
 
-.order-row{
-display:flex;
-justify-content:space-between;
-gap:10px;
-padding:11px 0;
-border-bottom:1px solid #222;
-}
-
-.demo-tag{
-color:#888;
-font-size:12px;
-}
-
-/* ===== ফুটার ===== */
-footer{
-text-align:center;
-padding:30px 10px;
-color:#999;
-border-top:1px solid #222;
-margin-top:30px;
-}
-
-/* ===== মডাল ===== */
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.82);
-z-index:50;
-align-items:center;
-justify-content:center;
-padding:20px;
-}
-
-.modal-box{
-width:min(430px,100%);
-background:#080808;
-border:2px solid #e50914;
-border-radius:18px;
-padding:22px;
-}
-
-.close{
-float:right;
-font-size:28px;
-cursor:pointer;
-}
-
-.selected{
-color:#e50914;
-font-weight:900;
-}
-
-.modal-box input{
-width:100%;
-padding:13px;
-background:#111;
-border:1px solid #555;
-color:#fff;
-border-radius:10px;
-}
-
-/* ===== মোবাইল ===== */
-@media(max-width:600px){
-
-.formation{
-min-height:300px;
+.whatsapp{
+  background:#16b85a;
 }
 
 .telegram{
-font-size:15px;
+  background:#0088cc;
 }
 
-.number{
-font-size:24px;
+/* recent */
+
+.recent{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:10px;
 }
 
-.formation-title{
-font-size:42px;
-letter-spacing:3px;
+.recent-item{
+  text-align:center;
+  padding:12px;
+  border-radius:10px;
+  background:rgba(255,255,255,.06);
 }
 
+/* modal */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  background:rgba(0,0,0,.78);
+}
+
+.modal-box{
+  width:min(450px,100%);
+  padding:22px;
+  border-radius:18px;
+  background:#001927;
+  border:1px solid var(--accent);
+  box-shadow:0 0 35px rgba(0,234,255,.25);
+}
+
+.close{
+  float:right;
+  cursor:pointer;
+  font-size:25px;
+}
+
+.selected{
+  margin:15px 0;
+  padding:13px;
+  border-radius:10px;
+  background:rgba(255,255,255,.06);
+}
+
+footer{
+  text-align:center;
+  opacity:.7;
+  padding:25px 0 5px;
+}
+
+@media(max-width:600px){
+
+  .logo-area{
+    height:245px;
+  }
+
+  #fishLogo{
+    height:225px;
+  }
+
+  .logo-fish{
+    font-size:16px;
+  }
+
+  .free-fish{
+    font-size:21px;
+  }
+
+  .contact-buttons{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ===================== সমুদ্রের ব্যাকগ্রাউন্ড ===================== -->
+<!-- ================= UNDERWATER ================= -->
 
 <div class="ocean">
 
-<div class="water-light"></div>
+  <div class="water-light"></div>
 
-<!-- অনেক মাছ -->
+  <!-- bubbles -->
+  <span class="bubble" style="left:4%;width:8px;height:8px;animation-duration:8s"></span>
+  <span class="bubble" style="left:10%;width:14px;height:14px;animation-duration:11s;animation-delay:2s"></span>
+  <span class="bubble" style="left:18%;width:7px;height:7px;animation-duration:7s"></span>
+  <span class="bubble" style="left:27%;width:11px;height:11px;animation-duration:10s"></span>
+  <span class="bubble" style="left:36%;width:8px;height:8px;animation-duration:9s;animation-delay:2s"></span>
+  <span class="bubble" style="left:46%;width:14px;height:14px;animation-duration:12s"></span>
+  <span class="bubble" style="left:58%;width:7px;height:7px;animation-duration:8s"></span>
+  <span class="bubble" style="left:69%;width:12px;height:12px;animation-duration:10s"></span>
+  <span class="bubble" style="left:81%;width:8px;height:8px;animation-duration:7s"></span>
+  <span class="bubble" style="left:92%;width:13px;height:13px;animation-duration:11s"></span>
 
-<div class="fish right"
-style="top:8%;animation-duration:15s">🐟</div>
+  <!-- free fish -->
+  <span class="free-fish to-right" style="top:10%;animation-duration:17s">🐟</span>
+  <span class="free-fish to-right" style="top:23%;animation-duration:22s;animation-delay:3s">🐠</span>
+  <span class="free-fish to-right" style="top:39%;animation-duration:19s;animation-delay:6s">🐡</span>
+  <span class="free-fish to-right" style="top:55%;animation-duration:25s">🐟</span>
+  <span class="free-fish to-right" style="top:70%;animation-duration:18s;animation-delay:4s">🐠</span>
+  <span class="free-fish to-right" style="top:85%;animation-duration:23s;animation-delay:2s">🐟</span>
 
-<div class="fish left"
-style="top:14%;animation-duration:19s">🐠</div>
+  <span class="free-fish to-left" style="top:16%;animation-duration:20s">🐠</span>
+  <span class="free-fish to-left" style="top:30%;animation-duration:18s;animation-delay:4s">🐟</span>
+  <span class="free-fish to-left" style="top:45%;animation-duration:24s">🐡</span>
+  <span class="free-fish to-left" style="top:61%;animation-duration:19s;animation-delay:5s">🐠</span>
+  <span class="free-fish to-left" style="top:77%;animation-duration:26s">🐟</span>
+  <span class="free-fish to-left" style="top:90%;animation-duration:21s;animation-delay:3s">🐠</span>
 
-<div class="fish right"
-style="top:21%;animation-duration:13s">🐡</div>
-
-<div class="fish left"
-style="top:28%;animation-duration:17s">🐟</div>
-
-<div class="fish right"
-style="top:34%;animation-duration:22s">🐠</div>
-
-<div class="fish left"
-style="top:41%;animation-duration:14s">🐡</div>
-
-<div class="fish right"
-style="top:48%;animation-duration:18s">🐟</div>
-
-<div class="fish left"
-style="top:55%;animation-duration:21s">🐠</div>
-
-<div class="fish right"
-style="top:62%;animation-duration:16s">🐡</div>
-
-<div class="fish left"
-style="top:69%;animation-duration:20s">🐟</div>
-
-<!-- বাবল -->
-
-<div class="bubble"
-style="left:8%;width:12px;height:12px;animation-duration:8s"></div>
-
-<div class="bubble"
-style="left:18%;width:20px;height:20px;animation-duration:12s"></div>
-
-<div class="bubble"
-style="left:31%;width:9px;height:9px;animation-duration:7s"></div>
-
-<div class="bubble"
-style="left:47%;width:16px;height:16px;animation-duration:10s"></div>
-
-<div class="bubble"
-style="left:63%;width:11px;height:11px;animation-duration:9s"></div>
-
-<div class="bubble"
-style="left:77%;width:22px;height:22px;animation-duration:13s"></div>
-
-<div class="bubble"
-style="left:91%;width:10px;height:10px;animation-duration:8s"></div>
-
-
-<!-- অনেক শেওলা -->
-
-<div class="seaweed-layer">
-
-<span class="weed"
-style="left:2%;height:150px"></span>
-
-<span class="weed"
-style="left:8%;height:220px;animation-delay:.4s"></span>
-
-<span class="weed"
-style="left:15%;height:170px;animation-delay:.8s"></span>
-
-<span class="weed"
-style="left:23%;height:240px;animation-delay:1.1s"></span>
-
-<span class="weed"
-style="left:31%;height:180px;animation-delay:.2s"></span>
-
-<span class="weed"
-style="left:40%;height:230px;animation-delay:1.4s"></span>
-
-<span class="weed"
-style="left:49%;height:160px;animation-delay:.7s"></span>
-
-<span class="weed"
-style="left:58%;height:250px;animation-delay:1.3s"></span>
-
-<span class="weed"
-style="left:67%;height:190px;animation-delay:.3s"></span>
-
-<span class="weed"
-style="left:76%;height:235px;animation-delay:1s"></span>
-
-<span class="weed"
-style="left:85%;height:175px;animation-delay:.5s"></span>
-
-<span class="weed"
-style="left:93%;height:225px;animation-delay:1.5s"></span>
-
-</div>
-</div>
-
-
-<!-- ===================== KSA PANEL ===================== -->
-
-<section class="formation">
-
-<div class="school" id="school"></div>
-
-<div class="formation-title">
-KSA PANEL
-</div>
-
-</section>
-
-
-<!-- ===================== নোটিশ ===================== -->
-
-<div class="notice">
-সকল সেবা ব্যবহারের জন্য ধন্যবাদ।
-</div>
-
-
-<div class="telegram">
-
-টেলিগ্রাম:
-
-<a href="https://t.me/ksapanel473"
-target="_blank">
-
-<b>@ksapanel473</b>
-
-</a>
+  <!-- seaweed -->
+  <span class="weed" style="left:2%;height:130px"></span>
+  <span class="weed" style="left:7%;height:180px;animation-delay:1s"></span>
+  <span class="weed" style="left:12%;height:145px;animation-delay:2s"></span>
+  <span class="weed" style="left:18%;height:205px"></span>
+  <span class="weed" style="left:25%;height:160px;animation-delay:1s"></span>
+  <span class="weed" style="left:32%;height:190px"></span>
+  <span class="weed" style="left:40%;height:135px;animation-delay:2s"></span>
+  <span class="weed" style="left:48%;height:175px"></span>
+  <span class="weed" style="left:56%;height:145px;animation-delay:1s"></span>
+  <span class="weed" style="left:64%;height:200px"></span>
+  <span class="weed" style="left:72%;height:150px;animation-delay:2s"></span>
+  <span class="weed" style="left:80%;height:190px"></span>
+  <span class="weed" style="left:88%;height:140px;animation-delay:1s"></span>
+  <span class="weed" style="left:95%;height:180px"></span>
 
 </div>
 
+<!-- LANGUAGE -->
 
-<main class="container">
+<div class="lang-switch">
+  <button id="bnBtn" class="active" onclick="setLanguage('bn')">বাংলা</button>
+  <button id="enBtn" onclick="setLanguage('en')">English</button>
+</div>
 
+<div class="container">
 
-<!-- ===================== ক্যাটাগরি ===================== -->
+  <!-- FISH LOGO -->
+  <div class="logo-area">
+    <div id="fishLogo"></div>
+  </div>
 
-<div class="categories">
+  <div class="notice">
+    <strong data-bn="KSA PANEL-এ স্বাগতম"
+            data-en="Welcome to KSA PANEL">
+      KSA PANEL-এ স্বাগতম
+    </strong>
+  </div>
 
-<button
-class="active"
-onclick="filterProducts('all',this)">
-সব
-</button>
+  <a class="telegram-top"
+     href="https://t.me/ksapanel473"
+     target="_blank"
+     data-bn="📲 Telegram সাপোর্ট"
+     data-en="📲 Telegram Support">
+    📲 Telegram সাপোর্ট
+  </a>
 
-<button
-onclick="filterProducts('sensi',this)">
-সেনসি
-</button>
+  <!-- CATEGORIES -->
 
-<button
-onclick="filterProducts('drag',this)">
-ড্রাগ হেডশট
-</button>
+  <div class="categories" id="categories">
 
-<button
-onclick="filterProducts('location',this)">
-লোকেশন
-</button>
+    <button class="active" data-cat="all"
+      data-bn="সব" data-en="All">সব</button>
 
-<button
-onclick="filterProducts('nonroot',this)">
-নন রুট
-</button>
+    <button data-cat="sens"
+      data-bn="সেনসি" data-en="Sensitivity">সেনসি</button>
 
-<button
-onclick="filterProducts('root',this)">
-রুট
-</button>
+    <button data-cat="head"
+      data-bn="ড্রাগ হেডশট" data-en="Drag Headshot">ড্রাগ হেডশট</button>
 
-<button
-onclick="filterProducts('iphone',this)">
-আইফোন
-</button>
+    <button data-cat="location"
+      data-bn="লোকেশন" data-en="Location">লোকেশন</button>
 
-<button
-onclick="filterProducts('pc',this)">
-পিসি প্যানেল
-</button>
+    <button data-cat="nonroot"
+      data-bn="নন রুট" data-en="Non Root">নন রুট</button>
+
+    <button data-cat="root"
+      data-bn="রুট" data-en="Root">রুট</button>
+
+    <button data-cat="iphone"
+      data-bn="আইফোন" data-en="iPhone">আইফোন</button>
+
+    <button data-cat="pc"
+      data-bn="পিসি প্যানেল" data-en="PC Panel">পিসি প্যানেল</button>
+
+  </div>
+
+  <!-- PRODUCTS -->
+
+  <div class="products">
+
+    <div class="product" data-cat="sens">
+      <h3 data-bn="সেনসি" data-en="Sensitivity">সেনসি</h3>
+      <div class="package">১০০ টাকা / 100 BDT</div>
+      <button class="buy"
+        onclick="openOrder('সেনসি','Sensitivity','100 টাকা')"
+        data-bn="অর্ডার করুন"
+        data-en="Order Now">অর্ডার করুন</button>
+    </div>
+
+    <div class="product" data-cat="head">
+      <h3 data-bn="ড্রাগ হেডশট" data-en="Drag Headshot">ড্রাগ হেডশট</h3>
+      <div class="package">১৪৫ টাকা / 145 BDT</div>
+      <button class="buy"
+        onclick="openOrder('ড্রাগ হেডশট','Drag Headshot','145 টাকা')"
+        data-bn="অর্ডার করুন"
+        data-en="Order Now">অর্ডার করুন</button>
+    </div>
+
+    <div class="product" data-cat="location">
+      <h3 data-bn="লোকেশন" data-en="Location">লোকেশন</h3>
+      <div class="package">৫০ টাকা / 50 BDT</div>
+      <button class="buy"
+        onclick="openOrder('লোকেশন','Location','50 টাকা')"
+        data-bn="অর্ডার করুন"
+        data-en="Order Now">অর্ডার করুন</button>
+    </div>
+
+    <div class="product" data-cat="nonroot">
+      <h3 data-bn="নন রুট" data-en="Non Root">নন রুট</h3>
+
+      <div class="package"
+        data-bn="৩০ দিন — ৩০০ টাকা"
+        data-en="30 Days — 300 BDT">
+        ৩০ দিন — ৩০০ টাকা
+      </div>
+
+      <div class="package"
+        data-bn="১ ওবিবি — ৭০০ টাকা"
+        data-en="1 OBB — 700 BDT">
+        ১ ওবিবি — ৭০০ টাকা
+      </div>
+
+      <div class="package"
+        data-bn="পারমানেন্ট — ১৪০০ টাকা"
+        data-en="Permanent — 1400 BDT">
+        পারমানেন্ট — ১৪০০ টাকা
+      </div>
+
+      <button class="buy"
+        onclick="openOrder('নন রুট','Non Root','৩০ দিন — ৩০০ টাকা / 1 OBB — ৭০০ টাকা / Permanent — ১৪০০ টাকা')"
+        data-bn="অর্ডার করুন"
+        data-en="Order Now">অর্ডার করুন</button>
+    </div>
+
+    <div class="product" data-cat="root">
+      <h3 data-bn="রুট" data-en="Root">রুট</h3>
+
+      <div class="package"
+        data-bn="৩০ দিন — ৪৫০ টাকা"
+        data-en="30 Days — 450 BDT">
+        ৩০ দিন — ৪৫০ টাকা
+      </div>
+
+      <div class="package"
+        data-bn="১ ওবিবি — ৯৭০ টাকা"
+        data-en="1 OBB — 970 BDT">
+        ১ ওবিবি — ৯৭০ টাকা
+      </div>
+
+      <div class="package"
+        data-bn="পারমানেন্ট — ৩৩০০ টাকা"
+        data-en="Permanent — 3300 BDT">
+        পারমানেন্ট — ৩৩০০ টাকা
+      </div>
+
+      <button class="buy"
+        onclick="openOrder('রুট','Root','৩০ দিন — ৪৫০ টাকা / 1 OBB — ৯৭০ টাকা / Permanent — ৩৩০০ টাকা')"
+        data-bn="অর্ডার করুন"
+        data-en="Order Now">অর্ডার করুন</button>
+    </div>
+
+    <div class="product" data-cat="iphone">
+      <h3 data-bn="আইফোন" data-en="iPhone">আইফোন</h3>
+
+      <div class="package"
+        data-bn="৩০ দিন — ৪০০ টাকা"
+        data-en="30 Days — 400 BDT">
+        ৩০ দিন — ৪০০ টাকা
+      </div>
+
+      <div class="package"
+        data-bn="১ ওবিবি — ৭০০ টাকা"
+        data-en="1 OBB — 700 BDT">
+        ১ ওবিবি — ৭০০ টাকা
+      </div>
+
+      <div class="package"
+        data-bn="পারমানেন্ট — ৪৫৭০ টাকা"
+        data-en="Permanent — 4570 BDT">
+        পারমানেন্ট — ৪৫৭০ টাকা
+      </div>
+
+      <button class="buy"
+        onclick="openOrder('আইফোন','iPhone','৩০ দিন — ৪০০ টাকা / 1 OBB — ৭০০ টাকা / Permanent — ৪৫৭০ টাকা')"
+        data-bn="অর্ডার করুন"
+        data-en="Order Now">অর্ডার করুন</button>
+    </div>
+
+    <div class="product" data-cat="pc">
+      <h3 data-bn="পিসি প্যানেল" data-en="PC Panel">পিসি প্যানেল</h3>
+
+      <div class="package"
+        data-bn="৩০ দিন — ৬০০ টাকা"
+        data-en="30 Days — 600 BDT">
+        ৩০ দিন — ৬০০ টাকা
+      </div>
+
+      <div class="package"
+        data-bn="১ ওবিবি — ১১৮০ টাকা"
+        data-en="1 OBB — 1180 BDT">
+        ১ ওবিবি — ১১৮০ টাকা
+      </div>
+
+      <div class="package"
+        data-bn="পারমানেন্ট — ২৩০০ টাকা"
+        data-en="Permanent — 2300 BDT">
+        পারমানেন্ট — ২৩০০ টাকা
+      </div>
+
+      <button class="buy"
+        onclick="openOrder('পিসি প্যানেল','PC Panel','৩০ দিন — ৬০০ টাকা / 1 OBB — ১১৮০ টাকা / Permanent — ২৩০০ টাকা')"
+        data-bn="অর্ডার করুন"
+        data-en="Order Now">অর্ডার করুন</button>
+    </div>
+
+  </div>
+
+  <!-- PAYMENT -->
+
+  <div class="section">
+
+    <h2 data-bn="পেমেন্ট"
+        data-en="Payment">
+      পেমেন্ট
+    </h2>
+
+    <div class="bkash">বিকাশ</div>
+
+    <div class="bkash-number">
+      01832137297
+    </div>
+
+    <input
+      id="trx"
+      type="text"
+      placeholder="লেনদেন নম্বর লিখুন"
+      data-placeholder-bn="লেনদেন নম্বর লিখুন"
+      data-placeholder-en="Enter transaction ID"
+    >
+
+    <button class="submit"
+      onclick="submitTransaction()"
+      data-bn="লেনদেন নম্বর জমা দিন"
+      data-en="Submit Transaction ID">
+      লেনদেন নম্বর জমা দিন
+    </button>
+
+  </div>
+
+  <!-- CONTACT -->
+
+  <div class="section">
+
+    <h2 data-bn="যোগাযোগের মাধ্যম"
+        data-en="Contact Method">
+      যোগাযোগের মাধ্যম
+    </h2>
+
+    <div class="contact-buttons">
+
+      <a class="whatsapp"
+         href="https://wa.me/8801832137297"
+         target="_blank"
+         data-bn="🟢 WhatsApp"
+         data-en="🟢 WhatsApp">
+        🟢 WhatsApp
+      </a>
+
+      <a class="telegram"
+         href="https://t.me/ksapanel473"
+         target="_blank"
+         data-bn="🔵 Telegram"
+         data-en="🔵 Telegram">
+        🔵 Telegram
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- RECENT -->
+
+  <div class="section">
+
+    <h2 data-bn="সাম্প্রতিক কার্যক্রম"
+        data-en="Recent Activity">
+      সাম্প্রতিক কার্যক্রম
+    </h2>
+
+    <div class="recent" id="recentNumbers"></div>
+
+  </div>
+
+  <footer>
+    © <span id="year"></span> KSA PANEL
+  </footer>
 
 </div>
 
-
-<!-- ===================== প্রোডাক্ট ===================== -->
-
-<section class="grid">
-
-
-<!-- সেনসি -->
-
-<article class="card product sensi">
-
-<h3>সেনসি</h3>
-
-<p>সম্পূর্ণ সেবা</p>
-
-<div class="price">
-১০০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('সেনসি','১০০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- ড্রাগ হেডশট -->
-
-<article class="card product drag">
-
-<h3>ড্রাগ হেডশট</h3>
-
-<p>সম্পূর্ণ সেবা</p>
-
-<div class="price">
-১৪৫ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('ড্রাগ হেডশট','১৪৫ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- লোকেশন -->
-
-<article class="card product location">
-
-<h3>লোকেশন</h3>
-
-<p>সম্পূর্ণ সেবা</p>
-
-<div class="price">
-৫০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('লোকেশন','৫০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- নন রুট ৩০ দিন -->
-
-<article class="card product nonroot">
-
-<h3>নন রুট</h3>
-
-<p>৩০ দিন</p>
-
-<div class="price">
-৩০০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('নন রুট — ৩০ দিন','৩০০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- নন রুট ১ ওবিবি -->
-
-<article class="card product nonroot">
-
-<h3>নন রুট</h3>
-
-<p>১ ওবিবি</p>
-
-<div class="price">
-৭০০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('নন রুট — ১ ওবিবি','৭০০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- নন রুট পারমানেন্ট -->
-
-<article class="card product nonroot">
-
-<h3>নন রুট</h3>
-
-<p>পারমানেন্ট</p>
-
-<div class="price">
-১৪০০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('নন রুট — পারমানেন্ট','১৪০০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- রুট ৩০ দিন -->
-
-<article class="card product root">
-
-<h3>রুট</h3>
-
-<p>৩০ দিন</p>
-
-<div class="price">
-৪৫০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('রুট — ৩০ দিন','৪৫০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- রুট ১ ওবিবি -->
-
-<article class="card product root">
-
-<h3>রুট</h3>
-
-<p>১ ওবিবি</p>
-
-<div class="price">
-৯৭০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('রুট — ১ ওবিবি','৯৭০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- রুট পারমানেন্ট -->
-
-<article class="card product root">
-
-<h3>রুট</h3>
-
-<p>পারমানেন্ট</p>
-
-<div class="price">
-৩৩০০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('রুট — পারমানেন্ট','৩৩০০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- আইফোন ৩০ দিন -->
-
-<article class="card product iphone">
-
-<h3>আইফোন</h3>
-
-<p>৩০ দিন</p>
-
-<div class="price">
-৪০০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('আইফোন — ৩০ দিন','৪০০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- আইফোন ১ ওবিবি -->
-
-<article class="card product iphone">
-
-<h3>আইফোন</h3>
-
-<p>১ ওবিবি</p>
-
-<div class="price">
-৭০০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('আইফোন — ১ ওবিবি','৭০০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- আইফোন পারমানেন্ট -->
-
-<article class="card product iphone">
-
-<h3>আইফোন</h3>
-
-<p>পারমানেন্ট</p>
-
-<div class="price">
-৪৫৭০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('আইফোন — পারমানেন্ট','৪৫৭০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- পিসি ৩০ দিন -->
-
-<article class="card product pc">
-
-<h3>পিসি প্যানেল</h3>
-
-<p>৩০ দিন</p>
-
-<div class="price">
-৬০০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('পিসি প্যানেল — ৩০ দিন','৬০০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- পিসি ১ ওবিবি -->
-
-<article class="card product pc">
-
-<h3>পিসি প্যানেল</h3>
-
-<p>১ ওবিবি</p>
-
-<div class="price">
-১১৮০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('পিসি প্যানেল — ১ ওবিবি','১১৮০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-<!-- পিসি পারমানেন্ট -->
-
-<article class="card product pc">
-
-<h3>পিসি প্যানেল</h3>
-
-<p>পারমানেন্ট</p>
-
-<div class="price">
-২৩০০ টাকা
-</div>
-
-<button
-class="buy"
-onclick="openOrder('পিসি প্যানেল — পারমানেন্ট','২৩০০ টাকা')">
-
-কিনুন
-
-</button>
-
-</article>
-
-
-</section>
-
-
-<!-- ===================== পেমেন্ট ===================== -->
-
-<section class="payment">
-
-<div class="bkash-logo">
-বিকাশ
-</div>
-
-<h2>
-পেমেন্ট
-</h2>
-
-<p>
-বিকাশে টাকা পাঠান
-</p>
-
-<div class="number">
-01832137297
-</div>
-
-<input
-id="trx"
-placeholder="লেনদেন নম্বর লিখুন"
->
-
-<button
-class="submit"
-onclick="submitPayment()">
-
-লেনদেন নম্বর জমা দিন
-
-</button>
-
-<p style="color:#999">
-সমস্যা হলে টেলিগ্রাম সহায়তা নিন।
-</p>
-
-</section>
-
-
-<!-- ===================== সাম্প্রতিক কার্যক্রম ===================== -->
-
-<section class="orders">
-
-<h2>
-সাম্প্রতিক কার্যক্রম
-</h2>
-
-<div class="demo-tag">
-এগুলো ডেমো/অ্যানিমেশন নম্বর — বাস্তব ক্রেতার তথ্য নয়।
-</div>
-
-<div id="orders"></div>
-
-</section>
-
-
-</main>
-
-
-<footer>
-
-© KSA PANEL — সকল অধিকার সংরক্ষিত
-
-</footer>
-
-
-<!-- ===================== অর্ডার মডাল ===================== -->
+<!-- ================= ORDER MODAL ================= -->
 
 <div class="modal" id="orderModal">
 
-<div class="modal-box">
+  <div class="modal-box">
 
-<span
-class="close"
-onclick="closeModal()">
+    <span class="close" onclick="closeOrder()">×</span>
 
-×
-</span>
+    <h2 data-bn="অর্ডার"
+        data-en="Order">
+      অর্ডার
+    </h2>
 
-<h2>
-অর্ডার
-</h2>
+    <div class="selected">
+      <div id="selectedProduct"></div>
+      <div id="selectedPackage"></div>
+    </div>
 
-<p>
-নির্বাচিত সেবা:
-</p>
+    <input
+      id="customerName"
+      type="text"
+      placeholder="আপনার নাম"
+      data-placeholder-bn="আপনার নাম"
+      data-placeholder-en="Your name"
+    >
 
-<p
-class="selected"
-id="selectedProduct">
-</p>
+    <input
+      id="customerContact"
+      type="text"
+      placeholder="যোগাযোগের তথ্য"
+      data-placeholder-bn="যোগাযোগের তথ্য"
+      data-placeholder-en="Contact information"
+    >
 
-<p>
-পেমেন্ট নম্বর:
-<b>01832137297</b>
-</p>
+    <button class="submit"
+      onclick="confirmOrder()"
+      data-bn="অর্ডার নিশ্চিত করুন"
+      data-en="Confirm Order">
+      অর্ডার নিশ্চিত করুন
+    </button>
 
-<input
-id="modalTrx"
-placeholder="লেনদেন নম্বর লিখুন"
->
-
-<button
-class="submit"
-onclick="submitOrder()">
-
-অর্ডার জমা দিন
-
-</button>
-
-</div>
+  </div>
 
 </div>
-
 
 <script>
 
-/* =========================================
-   মাছের ঝাঁক KSA PANEL লেখার দিকে আসবে
-========================================= */
+/* =====================================================
+   LANGUAGE SYSTEM
+===================================================== */
 
-const school=document.getElementById("school");
+let currentLanguage =
+  localStorage.getItem("ksaLanguage") || "bn";
 
-const fishIcons=[
-"🐟","🐠","🐡","🐟","🐠","🐡",
-"🐟","🐠","🐟","🐡","🐠","🐟",
-"🐠","🐡","🐟","🐠","🐡","🐟",
-"🐠","🐟","🐡","🐠","🐟","🐡",
-"🐠","🐟","🐠","🐡","🐟","🐠"
-];
+function setLanguage(lang){
 
-for(let i=0;i<30;i++){
+  currentLanguage = lang;
 
-const s=document.createElement("span");
+  localStorage.setItem("ksaLanguage",lang);
 
-s.textContent=
-fishIcons[i%fishIcons.length];
+  document.documentElement.lang =
+    lang === "bn" ? "bn" : "en";
 
-s.style.left=
-(Math.random()*100)+"%";
+  document.querySelectorAll("[data-bn]").forEach(el=>{
+    el.textContent =
+      el.getAttribute("data-"+lang);
+  });
 
-s.style.top=
-(Math.random()*100)+"%";
+  document.querySelectorAll("[data-placeholder-bn]").forEach(el=>{
+    el.placeholder =
+      el.getAttribute("data-placeholder-"+lang);
+  });
 
-s.style.setProperty(
-"--tx",
-(50-(Math.random()*20+5))+"vw"
-);
+  document.getElementById("bnBtn")
+    .classList.toggle("active",lang==="bn");
 
-s.style.setProperty(
-"--ty",
-(42-(Math.random()*18+5))+"vh"
-);
-
-s.style.setProperty(
-"--tx2",
-(50-(Math.random()*10))+"vw"
-);
-
-s.style.setProperty(
-"--ty2",
-(48-(Math.random()*8))+"vh"
-);
-
-s.style.setProperty(
-"--r",
-(Math.random()*40-20)+"deg"
-);
-
-s.style.animationDelay=
-(Math.random()*4)+"s";
-
-s.style.animationDuration=
-(2.5+Math.random()*3)+"s";
-
-school.appendChild(s);
-
+  document.getElementById("enBtn")
+    .classList.toggle("active",lang==="en");
 }
 
+setLanguage(currentLanguage);
 
-/* =========================================
-   ক্যাটাগরি ফিল্টার
-========================================= */
 
-function filterProducts(category,btn){
+/* =====================================================
+   CATEGORY FILTER
+===================================================== */
 
-document
-.querySelectorAll(".categories button")
-.forEach(b=>{
-b.classList.remove("active");
-});
+document.querySelectorAll("#categories button")
+.forEach(button=>{
 
-btn.classList.add("active");
+  button.addEventListener("click",()=>{
 
-document
-.querySelectorAll(".product")
-.forEach(card=>{
+    document.querySelectorAll("#categories button")
+      .forEach(b=>b.classList.remove("active"));
 
-card.style.display=
-(
-category==="all" ||
-card.classList.contains(category)
-)
-?
-"block"
-:
-"none";
+    button.classList.add("active");
+
+    const category = button.dataset.cat;
+
+    document.querySelectorAll(".product")
+    .forEach(product=>{
+
+      if(category==="all"){
+        product.style.display="";
+      }else{
+        product.style.display =
+          product.dataset.cat===category
+          ? ""
+          : "none";
+      }
+
+    });
+
+  });
 
 });
 
+
+/* =====================================================
+   ORDER MODAL
+===================================================== */
+
+let selectedData = {};
+
+function openOrder(bnName,enName,price){
+
+  selectedData = {
+    bnName,
+    enName,
+    price
+  };
+
+  updateSelected();
+
+  document.getElementById("orderModal")
+    .style.display="flex";
+}
+
+function updateSelected(){
+
+  const product =
+    currentLanguage==="bn"
+    ? selectedData.bnName
+    : selectedData.enName;
+
+  document.getElementById("selectedProduct")
+    .textContent =
+    (currentLanguage==="bn"
+      ? "পণ্য: "
+      : "Product: ") + product;
+
+  document.getElementById("selectedPackage")
+    .textContent =
+    (currentLanguage==="bn"
+      ? "মূল্য/প্যাকেজ: "
+      : "Price/Package: ") + selectedData.price;
+}
+
+function closeOrder(){
+  document.getElementById("orderModal")
+    .style.display="none";
+}
+
+function confirmOrder(){
+
+  const name =
+    document.getElementById("customerName").value.trim();
+
+  const contact =
+    document.getElementById("customerContact").value.trim();
+
+  if(!name || !contact){
+
+    alert(
+      currentLanguage==="bn"
+      ? "নাম ও যোগাযোগের তথ্য দিন।"
+      : "Please enter your name and contact information."
+    );
+
+    return;
+  }
+
+  alert(
+    currentLanguage==="bn"
+    ? "অর্ডারের তথ্য নেওয়া হয়েছে। লেনদেন নম্বর দিয়ে WhatsApp অথবা Telegram-এ যোগাযোগ করুন।"
+    : "Your order information has been received. Please send the transaction ID through WhatsApp or Telegram."
+  );
+
+  closeOrder();
 }
 
 
-/* =========================================
-   অর্ডার মডাল
-========================================= */
+/* =====================================================
+   TRANSACTION
+===================================================== */
 
-let selectedProduct="";
+function submitTransaction(){
 
-function openOrder(product,price){
+  const trx =
+    document.getElementById("trx").value.trim();
 
-selectedProduct=
-product+" — "+price;
+  if(!trx){
 
-document.getElementById(
-"selectedProduct"
-).textContent=
-selectedProduct;
+    alert(
+      currentLanguage==="bn"
+      ? "দয়া করে লেনদেন নম্বর লিখুন।"
+      : "Please enter the transaction ID."
+    );
 
-document.getElementById(
-"orderModal"
-).style.display=
-"flex";
+    return;
+  }
 
-}
+  const message =
+    currentLanguage==="bn"
+    ? "লেনদেন নম্বর: "+trx
+    : "Transaction ID: "+trx;
 
-function closeModal(){
+  const choice = confirm(
+    currentLanguage==="bn"
+    ? "WhatsApp-এ পাঠাতে OK চাপুন। Cancel করলে Telegram ব্যবহার করতে পারবেন।"
+    : "Press OK to send through WhatsApp. Press Cancel to use Telegram."
+  );
 
-document.getElementById(
-"orderModal"
-).style.display=
-"none";
+  if(choice){
 
-}
+    const url =
+      "https://wa.me/8801832137297?text="+
+      encodeURIComponent(message);
 
-function submitOrder(){
+    window.open(url,"_blank");
 
-const trx=
-document
-.getElementById("modalTrx")
-.value
-.trim();
+  }else{
 
-if(!trx){
+    const url =
+      "https://t.me/ksapanel473?text="+
+      encodeURIComponent(message);
 
-alert(
-"লেনদেন নম্বর লিখুন।"
-);
+    window.open(url,"_blank");
 
-return;
-
-}
-
-alert(
-"অর্ডার গ্রহণ করা হয়েছে। যাচাইয়ের জন্য টেলিগ্রাম সহায়তায় যোগাযোগ করুন।"
-);
-
-document.getElementById(
-"modalTrx"
-).value="";
-
-closeModal();
-
+  }
 }
 
 
-function submitPayment(){
+/* =====================================================
+   RECENT MASKED NUMBERS
+===================================================== */
 
-const trx=
-document
-.getElementById("trx")
-.value
-.trim();
+const recentNumbers = [
+  "016****925",
+  "018****314",
+  "017****681",
+  "019****472",
+  "013****806",
+  "015****239"
+];
 
-if(!trx){
+function showRecentNumbers(){
 
-alert(
-"লেনদেন নম্বর লিখুন।"
-);
+  const box =
+    document.getElementById("recentNumbers");
 
-return;
+  box.innerHTML="";
+
+  const shuffled =
+    [...recentNumbers]
+      .sort(()=>Math.random()-.5);
+
+  shuffled.slice(0,6).forEach(number=>{
+
+    const div =
+      document.createElement("div");
+
+    div.className="recent-item";
+    div.textContent=number;
+
+    box.appendChild(div);
+
+  });
 
 }
 
-alert(
-"লেনদেন নম্বর গ্রহণ করা হয়েছে।"
-);
+showRecentNumbers();
 
-document.getElementById(
-"trx"
-).value="";
-
-}
+setInterval(showRecentNumbers,60000);
 
 
-/* =========================================
-   প্রতি ১ মিনিটে নতুন ডেমো নম্বর
-========================================= */
+/* =====================================================
+   THEME CHANGES EVERY 1 MINUTE
+===================================================== */
 
-const products=[
+const themes = [
 
-"সেনসি",
-"ড্রাগ হেডশট",
-"লোকেশন",
-"নন রুট — ৩০ দিন",
-"নন রুট — ১ ওবিবি",
-"রুট — ৩০ দিন",
-"আইফোন — ৩০ দিন",
-"পিসি প্যানেল — ৩০ দিন",
-"নন রুট — পারমানেন্ট",
-"রুট — পারমানেন্ট"
+  {
+    bg1:"#00101c",
+    bg2:"#003d59",
+    accent:"#00eaff",
+    accent2:"#0077ff",
+    weed:"#087b58"
+  },
+
+  {
+    bg1:"#100005",
+    bg2:"#43000d",
+    accent:"#ff1744",
+    accent2:"#ff004c",
+    weed:"#155e35"
+  },
+
+  {
+    bg1:"#071000",
+    bg2:"#164d00",
+    accent:"#7dff00",
+    accent2:"#20d600",
+    weed:"#08713a"
+  },
+
+  {
+    bg1:"#090018",
+    bg2:"#320064",
+    accent:"#d45cff",
+    accent2:"#7d3cff",
+    weed:"#155c50"
+  },
+
+  {
+    bg1:"#001316",
+    bg2:"#005c61",
+    accent:"#00ffd5",
+    accent2:"#00a99b",
+    weed:"#06714e"
+  }
 
 ];
 
-let usedNumbers=new Set();
+let themeIndex=0;
 
+function changeTheme(){
 
-function makeUniqueNumber(){
+  themeIndex =
+    (themeIndex+1)%themes.length;
 
-let n;
+  const t=themes[themeIndex];
 
-do{
+  document.documentElement.style.setProperty(
+    "--bg1",t.bg1
+  );
 
-n=
-"01"+
-Math.floor(
-100000000+
-Math.random()*899999999
-)
-.toString()
-.slice(0,9);
+  document.documentElement.style.setProperty(
+    "--bg2",t.bg2
+  );
 
-}
-while(
-usedNumbers.has(n)
-);
+  document.documentElement.style.setProperty(
+    "--accent",t.accent
+  );
 
-usedNumbers.add(n);
+  document.documentElement.style.setProperty(
+    "--accent2",t.accent2
+  );
 
-if(
-usedNumbers.size>1000
-){
-
-usedNumbers.clear();
-
+  document.documentElement.style.setProperty(
+    "--weed",t.weed
+  );
 }
 
-return n;
+setInterval(changeTheme,60000);
+
+
+/* =====================================================
+   FISH "KSA PANEL" GENERATOR
+===================================================== */
+
+const fishLogo =
+  document.getElementById("fishLogo");
+
+const canvas =
+  document.createElement("canvas");
+
+const ctx =
+  canvas.getContext("2d");
+
+const fishCharacters=[
+  "🐟",
+  "🐠",
+  "🐡"
+];
+
+let logoPositions=[];
+let fishGroups=[];
+let currentGroup=0;
+
+function buildTextMap(){
+
+  canvas.width=900;
+  canvas.height=280;
+
+  ctx.clearRect(
+    0,0,
+    canvas.width,
+    canvas.height
+  );
+
+  ctx.fillStyle="#fff";
+
+  ctx.font=
+    "900 115px Arial,sans-serif";
+
+  ctx.textAlign="center";
+  ctx.textBaseline="middle";
+
+  ctx.fillText(
+    "KSA PANEL",
+    450,
+    140
+  );
+
+  const image =
+    ctx.getImageData(
+      0,0,
+      canvas.width,
+      canvas.height
+    ).data;
+
+  const points=[];
+
+  /*
+   * Step বড় রাখায় অতিরিক্ত মাছ হবে না।
+   * মাছগুলো কাছাকাছি থাকায় অক্ষরের shape পরিষ্কার থাকবে।
+   */
+
+  for(let y=35;y<245;y+=7){
+
+    for(let x=35;x<865;x+=7){
+
+      const index =
+        (y*canvas.width+x)*4+3;
+
+      if(image[index]>100){
+
+        points.push({
+          x:x,
+          y:y
+        });
+
+      }
+
+    }
+
+  }
+
+  /*
+   * সর্বোচ্চ মাছের সংখ্যা নিয়ন্ত্রণ
+   */
+
+  const maxFish=300;
+
+  if(points.length>maxFish){
+
+    const selected=[];
+
+    const step=
+      points.length/maxFish;
+
+    for(let i=0;i<maxFish;i++){
+
+      selected.push(
+        points[Math.floor(i*step)]
+      );
+
+    }
+
+    return selected;
+
+  }
+
+  return points;
+}
+
+logoPositions=buildTextMap();
+
+
+/*
+ * ২টি সমান দল:
+ * Group A = লেখা বানাবে
+ * Group B = সমুদ্রের মধ্যে চলবে
+ */
+
+function createFishGroups(){
+
+  fishLogo.innerHTML="";
+
+  fishGroups=[
+    [],
+    []
+  ];
+
+  const total =
+    logoPositions.length;
+
+  /*
+   * দুই দলে সমান সংখ্যক মাছ।
+   */
+
+  for(let i=0;i<total*2;i++){
+
+    const fish =
+      document.createElement("span");
+
+    fish.className="logo-fish";
+
+    fish.textContent =
+      fishCharacters[
+        Math.floor(
+          Math.random()*fishCharacters.length
+        )
+      ];
+
+    fishLogo.appendChild(fish);
+
+    const group =
+      i<total ? 0 : 1;
+
+    fishGroups[group].push({
+      el:fish,
+      target:
+        group===0
+        ? logoPositions[i]
+        : null,
+
+      x:Math.random()*880,
+      y:Math.random()*260,
+      angle:Math.random()*360,
+      speed:.4+Math.random()*.9,
+      phase:Math.random()*Math.PI*2
+    });
+
+  }
+
+}
+
+createFishGroups();
+
+
+/*
+ * Animation state:
+ *
+ * 0 = প্রথম দল লেখা বানাবে
+ * 1 = প্রথম দল ছড়াবে
+ * 2 = দ্বিতীয় দল লেখা বানাবে
+ * 3 = দ্বিতীয় দল ছড়াবে
+ */
+
+let animationState=0;
+let stateStart=performance.now();
+
+const FORM_TIME=3500;
+const HOLD_TIME=4500;
+const SCATTER_TIME=3000;
+
+
+/* random movement */
+
+function moveFreeFish(item,time){
+
+  const t=
+    time*.001;
+
+  item.x +=
+    item.speed;
+
+  if(item.x>900){
+    item.x=-30;
+  }
+
+  item.y +=
+    Math.sin(
+      t+item.phase
+    )*.25;
+
+  item.el.style.transform=
+    `translate(${item.x}px,${item.y}px)`;
+}
+
+
+/* put fish into letters */
+
+function formFish(item,index,progress){
+
+  const target=
+    item.target;
+
+  if(!target)return;
+
+  /*
+   * ease out
+   */
+
+  const p=
+    1-Math.pow(1-progress,3);
+
+  const startX=
+    item.scatterX ?? item.x;
+
+  const startY=
+    item.scatterY ?? item.y;
+
+  const x=
+    startX+
+    (target.x-startX)*p;
+
+  const y=
+    startY+
+    (target.y-startY)*p;
+
+  item.el.style.transform=
+    `translate(${x}px,${y}px)`;
+}
+
+
+/* scatter */
+
+function scatter(item,progress){
+
+  const p=
+    Math.min(
+      1,
+      progress
+    );
+
+  const x=
+    item.startX+
+    (item.scatterX-item.startX)*p;
+
+  const y=
+    item.startY+
+    (item.scatterY-item.startY)*p;
+
+  item.el.style.transform=
+    `translate(${x}px,${y}px)`;
+}
+
+
+function prepareScatter(group){
+
+  group.forEach(item=>{
+
+    const rect =
+      fishLogo.getBoundingClientRect();
+
+    item.startX=
+      item.target
+      ? item.target.x
+      : item.x;
+
+    item.startY=
+      item.target
+      ? item.target.y
+      : item.y;
+
+    item.scatterX=
+      Math.random()*
+      Math.max(100,rect.width-30);
+
+    item.scatterY=
+      Math.random()*
+      Math.max(100,rect.height-30);
+
+  });
 
 }
 
 
-function maskNumber(n){
+function setGroupToFree(group){
 
-return(
-n.slice(0,3)
-+
-"****"
-+
-n.slice(-3)
-);
+  group.forEach(item=>{
 
-}
+    item.x=
+      Math.random()*850;
 
+    item.y=
+      Math.random()*250;
 
-function refreshDemoOrders(){
+    item.scatterX=item.x;
+    item.scatterY=item.y;
 
-const box=
-document.getElementById(
-"orders"
-);
+    item.el.style.transform=
+      `translate(${item.x}px,${item.y}px)`;
 
-box.innerHTML="";
-
-const used=
-new Set();
-
-
-for(let i=0;i<5;i++){
-
-let num;
-
-do{
-
-num=
-makeUniqueNumber();
-
-}
-while(
-used.has(num)
-);
-
-used.add(num);
-
-
-const row=
-document.createElement("div");
-
-row.className=
-"order-row";
-
-row.innerHTML=
-"<span>"
-+
-maskNumber(num)
-+
-"</span>"
-+
-"<span>"
-+
-products[
-Math.floor(
-Math.random()*products.length
-)
-]
-+
-"</span>";
-
-box.appendChild(row);
-
-}
+  });
 
 }
 
 
-/* প্রথমবার চালু */
-refreshDemoOrders();
+function setGroupToText(group){
+
+  group.forEach((item,index)=>{
+
+    const target=
+      logoPositions[index];
+
+    item.target=target;
+
+    item.startX=
+      Math.random()*850;
+
+    item.startY=
+      Math.random()*250;
+
+    item.x=item.startX;
+    item.y=item.startY;
+
+  });
+
+}
 
 
-/* প্রতি ১ মিনিটে পরিবর্তন */
-setInterval(
-refreshDemoOrders,
-60000
-);
+function animationLoop(time){
+
+  const activeGroup =
+    fishGroups[animationState%2];
+
+  const otherGroup =
+    fishGroups[(animationState+1)%2];
+
+  const elapsed=
+    time-stateStart;
+
+  /*
+   * FORM
+   */
+
+  if(animationState===0 ||
+     animationState===2){
+
+    const progress=
+      Math.min(
+        1,
+        elapsed/FORM_TIME
+      );
+
+    activeGroup.forEach(
+      (item,index)=>
+        formFish(
+          item,
+          index,
+          progress
+        )
+    );
+
+    /*
+     * অন্য দল সমান সংখ্যায় চলবে
+     */
+
+    otherGroup.forEach(
+      item=>moveFreeFish(item,time)
+    );
+
+    if(elapsed>FORM_TIME+HOLD_TIME){
+
+      prepareScatter(activeGroup);
+
+      animationState++;
+      stateStart=time;
+    }
+
+  }
+
+  /*
+   * SCATTER
+   */
+
+  else{
+
+    const progress=
+      Math.min(
+        1,
+        elapsed/SCATTER_TIME
+      );
+
+    activeGroup.forEach(
+      item=>scatter(item,progress)
+    );
+
+    otherGroup.forEach(
+      item=>moveFreeFish(item,time)
+    );
+
+    /*
+     * scatter শেষ হলে পরের দলকে
+     * লেখা বানানোর জন্য প্রস্তুত করা
+     */
+
+    if(elapsed>SCATTER_TIME){
+
+      const nextGroup=
+        fishGroups[(animationState+1)%2];
+
+      setGroupToText(nextGroup);
+
+      animationState=
+        animationState===1
+        ? 2
+        : 0;
+
+      stateStart=time;
+    }
+
+  }
+
+  requestAnimationFrame(animationLoop);
+}
+
+
+/*
+ * প্রথম দল শুরুতে লেখা বানাবে
+ * দ্বিতীয় দল শুরু থেকেই চলবে
+ */
+
+setGroupToText(fishGroups[0]);
+setGroupToFree(fishGroups[1]);
+
+requestAnimationFrame(animationLoop);
+
+
+/* =====================================================
+   YEAR
+===================================================== */
+
+document.getElementById("year")
+  .textContent=new Date().getFullYear();
 
 </script>
 
